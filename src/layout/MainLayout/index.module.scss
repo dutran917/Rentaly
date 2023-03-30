@@ -13,9 +13,12 @@
 .header {
   height: 64px;
   background: #fff;
+  position: sticky;
+  top: 0;
 }
 .content {
-  height: calc(100vh - 128px);
+  height: calc(100vh - 64px);
+  overflow-y: auto;
 }
 .footer {
   height: 64px;

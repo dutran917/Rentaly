@@ -52,8 +52,8 @@ const MainLayout = ({ children }: { children: any }) => {
         className={style.content}
       >
         {children}
+        <Footer className={style.footer}>FOOTER</Footer>
       </Content>
-      <Footer className={style.footer}>FOOTER</Footer>
     </Layout>
   );
 };

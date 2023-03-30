@@ -44,6 +44,7 @@
   h2 {
     font-weight: 400;
     letter-spacing: 0;
+    font-size: 30px;
   }
   .borderIcon {
     width: 20px;
@@ -79,6 +80,29 @@
       top: 6px;
       background-color: $base-color;
       content: "";
+    }
+  }
+
+  .sectionItem {
+    padding: 0 50px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    .item {
+      width: 30%;
+      margin: 15px;
+      .title {
+        margin: 10px 0;
+        font-size: 16px;
+        font-weight: 700;
+        color: black;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      p {
+        font-size: 16px;
+      }
     }
   }
 }
