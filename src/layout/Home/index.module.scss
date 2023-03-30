@@ -1,0 +1,84 @@
+@import "../../styles/color.scss";
+.banner1 {
+  height: 600px;
+  background: url("/images/banner.png");
+  background-size: cover;
+  position: relative;
+  .bannerContent1 {
+    position: absolute;
+    top: 300px;
+    left: 80%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    height: 200px;
+    font-size: 20px;
+    font-weight: bold;
+    color: $base-color;
+    background: white;
+    padding: 50px 10px;
+  }
+}
+.banner2 {
+  background: url("/images/banner2.png");
+  background-size: cover;
+  position: relative;
+  height: 600px;
+  .bannerContent2 {
+    position: absolute;
+    top: 300px;
+    left: 80%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    height: 200px;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    background: transparent;
+    padding: 50px 10px;
+  }
+}
+
+.section {
+  margin: 50px 0;
+  text-align: center;
+  h2 {
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+  .borderIcon {
+    width: 20px;
+    height: 20px;
+    border: 3px solid $base-color;
+    display: inline-block;
+    position: relative;
+    .titleIcon {
+      width: 6px;
+      height: 6px;
+      background-color: $base-color;
+      display: inline-block;
+      position: absolute;
+      left: 4px;
+      top: 4px;
+    }
+    &::before {
+      left: 50%;
+      margin-left: -75px;
+      width: 65px;
+      height: 2px;
+      position: absolute;
+      top: 6px;
+      background-color: $base-color;
+      content: "";
+    }
+    &::after {
+      right: 50%;
+      margin-right: -75px;
+      width: 65px;
+      height: 2px;
+      position: absolute;
+      top: 6px;
+      background-color: $base-color;
+      content: "";
+    }
+  }
+}
