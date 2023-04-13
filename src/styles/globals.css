@@ -30,3 +30,6 @@ a {
 .ant-menu-horizontal > .ant-menu-item a:hover {
   color: #feb800;
 }
+.ant-layout {
+  background: white !important;
+}

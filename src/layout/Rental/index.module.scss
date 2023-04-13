@@ -1,0 +1,9 @@
+.container {
+  max-width: 1200px;
+  margin: auto;
+  .mainFilter {
+    height: 64px;
+    display: flex;
+    align-items: center;
+  }
+}

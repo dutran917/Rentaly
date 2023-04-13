@@ -1,8 +1,13 @@
-import MainLayout from "@/layout/MainLayout/MainLayout";
 import React from "react";
+import MainLayout from "@/layout/MainLayout/MainLayout";
+import RentMainPage from "@/layout/Rental";
 
-const Rental = () => {
-  return <MainLayout>rental</MainLayout>;
-};
-
-export default Rental;
+export default function Rental() {
+  return (
+    <>
+      <MainLayout>
+        <RentMainPage />
+      </MainLayout>
+    </>
+  );
+}
