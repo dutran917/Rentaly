@@ -1,9 +1,63 @@
 .container {
   max-width: 1200px;
   margin: auto;
-  .mainFilter {
+}
+.filterSection {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+  .filter {
     height: 64px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
+  }
+}
+.slideSection {
+  .slideItem {
+    // width: 20%;
+    margin: 5px 15px;
+    color: #222;
+    display: inline-block;
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 3px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+    border: none;
+    background-color: #f2f2f2;
+    transition: 0.3s;
+    p {
+      padding: 0;
+    }
+    &:hover {
+      color: #feb800;
+    }
+  }
+}
+
+.listItemSection {
+  .listItem {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 2rem;
+    .item {
+      width: 22%;
+      min-height: 320px;
+      font-size: 14px;
+      .itemType {
+        word-spacing: 0.085rem;
+      }
+      .itemImage {
+        height: 160px;
+        width: 100%;
+      }
+      .itemName {
+        font-weight: 700;
+        font-size: 16px;
+      }
+      .itemPrice {
+        font-size: 15px;
+        font-weight: 600;
+      }
+    }
   }
 }
