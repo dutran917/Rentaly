@@ -38,7 +38,15 @@ const MainLayout = ({ children }: { children: any }) => {
   return (
     <Layout>
       <Header className={style.header}>
-        <div className={style.logo}></div>
+        <div className={style.logo}>
+          <img
+            src="images/logo.png"
+            style={{
+              width: "180px",
+              height: "50px",
+            }}
+          />
+        </div>
         <Menu
           className={style.menuBar}
           theme="light"

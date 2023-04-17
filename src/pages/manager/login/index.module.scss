@@ -1,0 +1,17 @@
+.loginContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: url("/images/background.jpg");
+  background-size: cover;
+  .formLogin {
+    width: 500px;
+    /* text-align: center; */
+    padding: 50px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 3px 6px rgba(0, 0, 0, 0.2);
+  }
+}
