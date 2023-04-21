@@ -10,19 +10,18 @@ import styles from "./index.module.scss";
 import { useRequest } from "ahooks";
 import { loginManager } from "./service";
 import { useRouter } from "next/router";
+import { setCookie } from "cookies-next";
 const ManagerLogin = () => {
   const router = useRouter();
   const login = useRequest(loginManager, {
     manual: true,
     onSuccess: (res) => {
-      localStorage.setItem(
-        "manager",
-        JSON.stringify(res.data)
-      );
+      setCookie("managerId", res?.data?.id);
+      setCookie("accessToken", res.data?.accessToken);
       notification.success({
         message: "Đăng nhập thành công",
       });
-      router.push("/manager");
+      router.push("/manager/dashboard");
     },
     onError: (e) => {
       notification.error({

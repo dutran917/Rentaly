@@ -62,4 +62,5 @@ a {
 }
 .ant-layout-sider {
   background: white;
+  /* min-width: 235px !important; */
 }

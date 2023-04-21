@@ -2,27 +2,45 @@ import React, { useState } from "react";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  UploadOutlined,
+  HomeOutlined,
   UserOutlined,
-  VideoCameraOutlined,
+  PieChartOutlined,
+  CalendarOutlined,
   LogoutOutlined,
 } from "@ant-design/icons";
 import { Button, Layout, Menu, Space } from "antd";
 import styles from "./index.module.scss";
-import { useLocalStorageState } from "ahooks";
 import { useRouter } from "next/router";
+import { deleteCookie, getCookies } from "cookies-next";
+import { useProfile } from "@/store/ManagerProfile/useProfile";
 const { Header, Sider, Content } = Layout;
 
 const ManagerLayout = ({ children }: { children: any }) => {
   const [collapsed, setCollapsed] = useState(false);
-  const [manager, setManager] = useLocalStorageState<{
-    full_name: string;
-  } | null>("manager");
+  //@ts-ignore
+  const { profile } = useProfile();
+
   const router = useRouter();
   const handleLogout = () => {
     router.push("/manager/login");
-    setManager(null);
+    deleteCookie("managerId");
+    deleteCookie("accessToken");
   };
+  const activeMenu = () => {
+    switch (router.pathname) {
+      case "/manager/dashboard":
+        return ["1"];
+      case "/manager/rental-management":
+        return ["2"];
+      case "/manager/service-management":
+        return ["3"];
+      case "/manager/booking-management":
+        return ["4"];
+      default:
+        return ["1"];
+    }
+  };
+
   return (
     <Layout>
       <Sider
@@ -31,12 +49,14 @@ const ManagerLayout = ({ children }: { children: any }) => {
         collapsed={collapsed}
         style={{
           borderRight: "1px solid rgba(0,0,0,0.1)",
+          minWidth: "270px",
+          // width: 270px;
         }}
       >
         <div className={styles.logo}>
           {!collapsed && (
             <img
-              src="images/logo.png"
+              src="https://res.cloudinary.com/deiijz7oj/image/upload/v1682071326/qrd8wf7wpyvzykp0e4fn.png"
               style={{
                 width: "150px",
                 height: "50px",
@@ -47,7 +67,7 @@ const ManagerLayout = ({ children }: { children: any }) => {
         <Menu
           theme="light"
           mode="inline"
-          defaultSelectedKeys={["1"]}
+          defaultSelectedKeys={activeMenu()}
           style={{
             height: "100vh",
             marginTop: "20px",
@@ -55,18 +75,61 @@ const ManagerLayout = ({ children }: { children: any }) => {
           items={[
             {
               key: "1",
-              icon: <UserOutlined />,
-              label: "nav 1",
+              icon: <PieChartOutlined />,
+              label: (
+                <div
+                  onClick={() => {
+                    router.push("/manager/dashboard");
+                  }}
+                >
+                  Thông tin chung
+                </div>
+              ),
             },
             {
               key: "2",
-              icon: <VideoCameraOutlined />,
-              label: "nav 2",
+              icon: <HomeOutlined />,
+              label: (
+                <div
+                  onClick={() => {
+                    router.push(
+                      "/manager/rental-management"
+                    );
+                  }}
+                >
+                  Quản lý chung cư
+                </div>
+              ),
             },
             {
               key: "3",
-              icon: <UploadOutlined />,
-              label: "nav 3",
+              icon: <UserOutlined />,
+              label: (
+                <div
+                  onClick={() => {
+                    router.push(
+                      "/manager/service-management"
+                    );
+                  }}
+                >
+                  Quản lý dịch vụ
+                </div>
+              ),
+            },
+            {
+              key: "4",
+              icon: <CalendarOutlined />,
+              label: (
+                <div
+                  onClick={() => {
+                    router.push(
+                      "/manager/booking-management"
+                    );
+                  }}
+                >
+                  Quản lý lịch xem phòng
+                </div>
+              ),
             },
           ]}
         />
@@ -93,7 +156,7 @@ const ManagerLayout = ({ children }: { children: any }) => {
             }
           )}
 
-          {manager && (
+          {profile && (
             <>
               <Space>
                 <div
@@ -102,7 +165,7 @@ const ManagerLayout = ({ children }: { children: any }) => {
                     fontWeight: 600,
                   }}
                 >
-                  {manager?.full_name}
+                  {profile?.full_name}
                 </div>
                 <Button
                   icon={<LogoutOutlined />}
