@@ -11,13 +11,16 @@ import { useRequest } from "ahooks";
 import { loginManager } from "./service";
 import { useRouter } from "next/router";
 import { setCookie } from "cookies-next";
+import { useProfile } from "@/store/ManagerProfile/useProfile";
 const ManagerLogin = () => {
   const router = useRouter();
+  const { setProfile } = useProfile();
   const login = useRequest(loginManager, {
     manual: true,
     onSuccess: (res) => {
       setCookie("managerId", res?.data?.id);
       setCookie("accessToken", res.data?.accessToken);
+      setProfile(res.data);
       notification.success({
         message: "Đăng nhập thành công",
       });

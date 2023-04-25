@@ -13,16 +13,18 @@ import styles from "./index.module.scss";
 import { useRouter } from "next/router";
 import { deleteCookie, getCookies } from "cookies-next";
 import { useProfile } from "@/store/ManagerProfile/useProfile";
+import { initialManagerProfile } from "@/store/ManagerProfile/profile";
 const { Header, Sider, Content } = Layout;
 
 const ManagerLayout = ({ children }: { children: any }) => {
   const [collapsed, setCollapsed] = useState(false);
   //@ts-ignore
-  const { profile } = useProfile();
+  const { profile, setProfile } = useProfile();
 
   const router = useRouter();
   const handleLogout = () => {
     router.push("/manager/login");
+    setProfile(initialManagerProfile);
     deleteCookie("managerId");
     deleteCookie("accessToken");
   };
@@ -42,7 +44,7 @@ const ManagerLayout = ({ children }: { children: any }) => {
   };
 
   return (
-    <Layout>
+    <Layout className={styles.managerLayout}>
       <Sider
         trigger={null}
         collapsible
@@ -133,7 +135,6 @@ const ManagerLayout = ({ children }: { children: any }) => {
             },
           ]}
         />
-        <Button icon={<LogoutOutlined />}></Button>
       </Sider>
       <Layout className="site-layout">
         <Header
