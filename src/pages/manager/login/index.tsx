@@ -19,7 +19,10 @@ const ManagerLogin = () => {
     manual: true,
     onSuccess: (res) => {
       setCookie("managerId", res?.data?.id);
-      setCookie("accessToken", res.data?.accessToken);
+      setCookie(
+        "accessTokenManager",
+        res.data?.accessToken
+      );
       setProfile(res.data);
       notification.success({
         message: "Đăng nhập thành công",

@@ -4,7 +4,7 @@ const instanceRequest = axios.create({
   baseURL: "http://localhost:4000",
 });
 
-const token = getCookie("accessToken");
+const token = getCookie("accessTokenManager");
 
 export const request = instanceRequest;
 export const privateRequest = (

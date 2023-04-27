@@ -9,7 +9,7 @@ const PATH: any = ["manager"];
 
 export async function middleware(request: NextRequest) {
   const { cookies } = request;
-  const token = cookies.get("accessToken");
+  const token = cookies.get("accessTokenManager");
   const path = request.nextUrl.pathname;
 
   if (!token && path !== "/manager/login") {

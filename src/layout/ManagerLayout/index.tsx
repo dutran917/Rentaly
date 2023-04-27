@@ -26,7 +26,7 @@ const ManagerLayout = ({ children }: { children: any }) => {
     router.push("/manager/login");
     setProfile(initialManagerProfile);
     deleteCookie("managerId");
-    deleteCookie("accessToken");
+    deleteCookie("accessTokenManager");
   };
   const activeMenu = () => {
     switch (router.pathname) {
