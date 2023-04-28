@@ -39,7 +39,7 @@ const ManagerLayout = ({ children }: { children: any }) => {
       case "/manager/booking-management":
         return ["4"];
       default:
-        return ["1"];
+        return [];
     }
   };
 
