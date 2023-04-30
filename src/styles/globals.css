@@ -73,3 +73,24 @@ a {
 .ck-editor__editable {
   min-height: 200px;
 }
+.ant-upload-list-picture-card
+  .ant-upload-list-item-info::before {
+  left: 0 !important;
+}
+.ant-upload.ant-upload-select-picture-card {
+  width: 234px !important;
+}
+.ant-upload-list-picture-card-container {
+  width: 234px !important;
+}
+.ant-upload-list-picture-card
+  .ant-upload-list-item-thumbnail,
+.ant-upload-list-picture-card
+  .ant-upload-list-item-thumbnail
+  img {
+  object-fit: cover !important;
+}
+
+.ant-upload.ant-upload-select {
+  /* display: block !important; */
+}
