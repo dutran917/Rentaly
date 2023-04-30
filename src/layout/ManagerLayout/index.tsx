@@ -26,7 +26,7 @@ const ManagerLayout = ({ children }: { children: any }) => {
     router.push("/manager/login");
     setProfile(initialManagerProfile);
     deleteCookie("managerId");
-    deleteCookie("accessToken");
+    deleteCookie("accessTokenManager");
   };
   const activeMenu = () => {
     switch (router.pathname) {
@@ -39,7 +39,7 @@ const ManagerLayout = ({ children }: { children: any }) => {
       case "/manager/booking-management":
         return ["4"];
       default:
-        return ["1"];
+        return [];
     }
   };
 

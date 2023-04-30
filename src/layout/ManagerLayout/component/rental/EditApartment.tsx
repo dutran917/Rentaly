@@ -5,14 +5,14 @@ import React, { useState } from "react";
 import { LeftOutlined } from "@ant-design/icons";
 import styles from "./index.module.scss";
 
-import ApartmentForm from "./AddApartmentForm";
 import { useRouter } from "next/router";
-const AddApartment = () => {
+import EditApartmentForm from "./EditApartmentForm";
+const EditApartment = () => {
   const [tab, setTab] = useState("1");
   const renderTab = () => {
     switch (tab) {
       case "1":
-        return <ApartmentForm />;
+      // return <EditApartmentForm />;
       case "2":
         return <>rooms</>;
       default:
@@ -53,4 +53,4 @@ const AddApartment = () => {
   );
 };
 
-export default AddApartment;
+export default EditApartment;

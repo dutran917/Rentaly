@@ -1,10 +1,17 @@
 import { useMount } from "ahooks";
 import { useProfile } from "@/store/ManagerProfile/useProfile";
+import { useRouter } from "next/router";
 
 const AppLayout = ({ children }: any) => {
   const { requestGetProfile } = useProfile();
+  const router = useRouter();
   useMount(() => {
-    requestGetProfile.run();
+    if (
+      router.pathname.includes("manager") &&
+      !router.pathname.includes("login")
+    ) {
+      requestGetProfile.run();
+    }
   });
 
   if (requestGetProfile.loading) return null;
