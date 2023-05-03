@@ -1,6 +1,27 @@
 import { privateRequest } from "@/api/request";
 import { API_PATH } from "@/utils/constant";
 
+interface CreateApartmentInput {
+  title: string;
+  subtitle: string;
+  content: string;
+  address: string;
+  lat: number;
+  long: number;
+  district: string;
+  province: string;
+  image: string[];
+  tags: number[];
+}
+
+export const createApartment = (
+  input: CreateApartmentInput
+) => {
+  return privateRequest("POST", API_PATH.CREATE_APARTMENT, {
+    ...input,
+  });
+};
+
 export const getListApartment = (
   {
     current,
@@ -24,7 +45,12 @@ export const getListApartment = (
   });
 };
 
-export const getDetailApartment = (id: number) => {};
+export const getDetailApartment = (id: number) => {
+  return privateRequest(
+    "GET",
+    API_PATH.APARTMENT_DETAIL(id)
+  );
+};
 
 export const getListApartmentTags = () => {
   return privateRequest("GET", API_PATH.APARTMENT_TAGS);

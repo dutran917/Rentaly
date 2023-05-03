@@ -57,7 +57,16 @@ const RentalManage = () => {
       align: "center",
       render: (_, record) => (
         <>
-          <EyeOutlined />
+          <EyeOutlined
+            style={{
+              cursor: "pointer",
+            }}
+            onClick={() => {
+              router.push(
+                `rental-management/${record?.id}`
+              );
+            }}
+          />
         </>
       ),
     },

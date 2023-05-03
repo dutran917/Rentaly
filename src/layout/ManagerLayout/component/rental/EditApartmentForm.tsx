@@ -23,10 +23,21 @@ const EditApartmentForm = ({
   const [editorLoaded, setEditorLoaded] = useState(false);
   const [data, setData] = useState("");
   const tags = useRequest(getListApartmentTags);
-
+  const [form] = Form.useForm();
   useEffect(() => {
     setEditorLoaded(true);
   }, []);
+
+  useEffect(() => {
+    form.setFieldsValue({
+      title: infoApartment?.title,
+      subtitle: infoApartment?.subtitle,
+      tags: infoApartment?.TagsInApartment?.map(
+        (item: any) => item?.apartmentTagId
+      ),
+    });
+    setData(infoApartment?.content);
+  }, [infoApartment]);
   const onFinish = (value: any) => {
     console.log(value);
   };
@@ -35,13 +46,8 @@ const EditApartmentForm = ({
       <div className={styles.formData}>
         <Form
           layout="vertical"
+          form={form}
           onFinish={onFinish}
-          initialValues={{
-            title: infoApartment?.title,
-            subtitle: infoApartment?.subtitle,
-            content: infoApartment?.content,
-            tags: infoApartment?.tags,
-          }}
         >
           <Form.Item
             name="title"
@@ -67,17 +73,9 @@ const EditApartmentForm = ({
           >
             <Input placeholder="Nhập mô tả" />
           </Form.Item>
-          <Form.Item
-            name="content"
-            label="Mô tả chi tiết"
-            rules={[
-              {
-                required: true,
-                message: "Vui lòng nhập",
-              },
-            ]}
-          >
+          <Form.Item name="content" label="Mô tả chi tiết">
             <Editor
+              data={data}
               name="description"
               onChange={(data: any) => {
                 setData(data);
@@ -119,7 +117,7 @@ const EditApartmentForm = ({
               htmlType="submit"
               className={styles.submitBtn}
             >
-              Xác nhận
+              Sửa thông tin
             </Button>
           </Row>
         </Form>

@@ -6,6 +6,7 @@ import {
   Input,
   Row,
   Select,
+  notification,
 } from "antd";
 import Modal from "antd/lib/modal/Modal";
 import Link from "next/link";
@@ -14,17 +15,51 @@ import { LeftOutlined } from "@ant-design/icons";
 import styles from "./index.module.scss";
 import Editor from "./Editor";
 import { useRequest } from "ahooks";
-import { getListApartmentTags } from "./service";
+import {
+  createApartment,
+  getListApartmentTags,
+} from "./service";
+import UploadImage from "@/components/UploadImage";
+import { useRouter } from "next/router";
 const ApartmentForm = () => {
   const [editorLoaded, setEditorLoaded] = useState(false);
   const [data, setData] = useState("");
   const tags = useRequest(getListApartmentTags);
+  const router = useRouter();
+  const createRequest = useRequest(createApartment, {
+    manual: true,
+    onSuccess: (res) => {
+      router.push(
+        `/manager/rental-management/${res.data?.id}`
+      );
+      notification.success({
+        message: "Tạo chung cư thành công",
+        description: "Vui lòng nhập thông tin các phòng",
+      });
+    },
+    onError(err) {
+      notification.error({
+        message: "Có lỗi xảy ra",
+      });
+    },
+  });
 
   useEffect(() => {
     setEditorLoaded(true);
   }, []);
   const onFinish = (value: any) => {
-    console.log(value);
+    // console.log(value);
+    const payload = {
+      ...value,
+      image: value?.image?.fileList?.map(
+        (item: any) => item?.response[0]?.path
+      ),
+      lat: +value?.lat,
+      long: +value?.long,
+      district: "Đống Đa",
+      province: "Hà Nội",
+    };
+    createRequest.run(payload);
   };
   return (
     <div>
@@ -65,6 +100,7 @@ const ApartmentForm = () => {
             ]}
           >
             <Editor
+              data={data}
               name="description"
               onChange={(data: any) => {
                 setData(data);
@@ -72,6 +108,30 @@ const ApartmentForm = () => {
               editorLoaded={editorLoaded}
             />
           </Form.Item>
+          <Form.Item
+            name="address"
+            label="Địa chỉ"
+            rules={[
+              {
+                required: true,
+                message: "Vui lòng nhập",
+              },
+            ]}
+          >
+            <Input placeholder="nhập địa chỉ tòa nhà" />
+          </Form.Item>
+          <Row justify="space-evenly">
+            <Col span={8}>
+              <Form.Item name="lat">
+                <Input type="number" placeholder="lat" />
+              </Form.Item>
+            </Col>
+            <Col span={8}>
+              <Form.Item name="long">
+                <Input type="number" placeholder="long" />
+              </Form.Item>
+            </Col>
+          </Row>
           <Row>
             <Col span={12}>
               <Form.Item
@@ -97,6 +157,7 @@ const ApartmentForm = () => {
               </Form.Item>
             </Col>
           </Row>
+          <UploadImage />
           <Row justify="center">
             <Button className={styles.submitBtn}>
               Nhập lại

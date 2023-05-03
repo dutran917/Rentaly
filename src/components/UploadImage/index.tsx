@@ -50,7 +50,7 @@ const UploadImage = () => {
           textAlign: "center",
         }}
         label="Ảnh phòng (Tối đa 5 ảnh)"
-        name="enterprise_image"
+        name="image"
         rules={[
           {
             required: true,
