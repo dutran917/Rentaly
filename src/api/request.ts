@@ -4,15 +4,16 @@ const instanceRequest = axios.create({
   baseURL: "http://localhost:4000",
 });
 
-const tokenManager = getCookie("accessTokenManager");
-
 export const request = instanceRequest;
-export const privateRequest = (
+export const privateRequest = async (
   method: string,
   url: string,
   payload?: any
-) =>
-  instanceRequest({
+) => {
+  const tokenManager = await getCookie(
+    "accessTokenManager"
+  );
+  return instanceRequest({
     method: method,
     url: url,
     data: payload,
@@ -20,3 +21,4 @@ export const privateRequest = (
       Authorization: `Bearer ${tokenManager}`,
     },
   });
+};

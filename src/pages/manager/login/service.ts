@@ -5,5 +5,9 @@ export const loginManager = async (data: {
   username: string;
   password: string;
 }) => {
-  return await request.post(API_PATH.MANAGER_LOGIN, data);
+  try {
+    return await request.post(API_PATH.MANAGER_LOGIN, data);
+  } catch (error) {
+    console.log(error);
+  }
 };

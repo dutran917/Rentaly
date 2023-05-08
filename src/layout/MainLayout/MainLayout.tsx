@@ -60,7 +60,9 @@ const MainLayout = ({ children }: { children: any }) => {
         className={style.content}
       >
         {children}
-        <Footer className={style.footer}>FOOTER</Footer>
+        <Footer className={style.footer}>
+          © Bản quyền thuộc về <a href="/">Rentaly</a> 2023.
+        </Footer>
       </Content>
     </Layout>
   );

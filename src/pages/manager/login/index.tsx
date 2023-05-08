@@ -18,16 +18,16 @@ const ManagerLogin = () => {
   const login = useRequest(loginManager, {
     manual: true,
     onSuccess: (res) => {
+      router.push("/manager/dashboard");
       setCookie("managerId", res?.data?.id);
       setCookie(
         "accessTokenManager",
-        res.data?.accessToken
+        res?.data?.accessToken
       );
-      setProfile(res.data);
+      setProfile(res?.data);
       notification.success({
         message: "Đăng nhập thành công",
       });
-      router.push("/manager/dashboard");
     },
     onError: (e) => {
       notification.error({

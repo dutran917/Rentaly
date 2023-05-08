@@ -21,6 +21,18 @@
 }
 .footer {
   height: 64px;
+  background: #2c2c2c;
+  text-align: center;
+  color: #fff;
+  a {
+    transition: ease-in-out 0.5s;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    &:hover {
+      color: #feb800;
+    }
+  }
 }
 .menuBar {
   justify-content: end;

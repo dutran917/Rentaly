@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import EditApartmentForm from "./EditApartmentForm";
 import { useRequest } from "ahooks";
 import { getDetailApartment } from "./service";
+import RoomList from "./RoomList";
 const EditApartment = () => {
   const [tab, setTab] = useState("1");
   const [dataApartment, setDataApartment] = useState<any>();
@@ -36,7 +37,7 @@ const EditApartment = () => {
           />
         );
       case "2":
-        return <>rooms</>;
+        return <RoomList />;
       default:
         return null;
     }
