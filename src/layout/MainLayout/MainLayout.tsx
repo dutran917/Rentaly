@@ -40,11 +40,13 @@ const MainLayout = ({ children }: { children: any }) => {
       <Header className={style.header}>
         <div className={style.logo}>
           <img
-            src="images/logo.png"
-            style={{
-              width: "180px",
-              height: "50px",
-            }}
+            src="/images/logo.png"
+            style={
+              {
+                // width: "180px",
+                // height: "50px",
+              }
+            }
           />
         </div>
         <Menu

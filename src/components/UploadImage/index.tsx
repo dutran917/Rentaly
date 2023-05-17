@@ -5,16 +5,29 @@ import {
   UploadFile,
   UploadProps,
 } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import { RcFile } from "antd/lib/upload";
-const UploadImage = () => {
+const UploadImage = ({ images }: { images: any[] }) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
   const [fileList, setFileList] = useState<UploadFile[]>(
     []
   );
+
+  useEffect(() => {
+    if (images?.length) {
+      setFileList((state) =>
+        images.map((item, index) => ({
+          uid: index.toString(),
+          name: "image.png",
+          status: "done",
+          url: item?.url,
+        }))
+      );
+    }
+  }, [images]);
 
   const handleCancel = () => setPreviewOpen(false);
   const onPreview = async (file: UploadFile) => {
@@ -78,8 +91,9 @@ const UploadImage = () => {
           onChange={(val: any) => {
             setFileList([...val.fileList]);
           }}
-          onRemove={() => {
-            setFileList([]);
+          onRemove={(val) => {
+            // setFileList([]);
+            console.log(val);
           }}
         >
           {fileList.length < 5 && "Tải lên"}

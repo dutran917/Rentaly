@@ -127,6 +127,12 @@ const RoomList = () => {
               style={{
                 width: "100%",
               }}
+              formatter={(value) =>
+                `${value}`.replace(
+                  /\B(?=(\d{3})+(?!\d))/g,
+                  ","
+                )
+              }
             />
           </Form.Item>
           <Form.Item
@@ -212,11 +218,8 @@ const RoomList = () => {
         createRoomForm.resetFields();
       },
       onOk() {
-        if (
-          createRoomForm.getFieldValue("title") &&
-          createRoomForm.getFieldValue("area")
-        ) {
-          createRoomForm.resetFields();
+        if (createRoomForm.getFieldValue("title")) {
+          // createRoomForm.resetFields();
           return Promise.resolve();
         } else {
           return Promise.reject();

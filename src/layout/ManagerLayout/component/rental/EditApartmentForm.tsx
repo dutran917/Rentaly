@@ -6,24 +6,45 @@ import {
   Input,
   Row,
   Select,
+  message,
 } from "antd";
 import Modal from "antd/lib/modal/Modal";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { LeftOutlined } from "@ant-design/icons";
+import {
+  LeftOutlined,
+  EditOutlined,
+} from "@ant-design/icons";
 import styles from "./index.module.scss";
 import Editor from "./Editor";
 import { useRequest } from "ahooks";
-import { getListApartmentTags } from "./service";
+import {
+  editApartment,
+  getListApartmentTags,
+} from "./service";
+import UploadImage from "@/components/UploadImage";
 const EditApartmentForm = ({
   infoApartment,
+  refresh,
 }: {
   infoApartment: any;
+  refresh: () => void;
 }) => {
   const [editorLoaded, setEditorLoaded] = useState(false);
   const [data, setData] = useState("");
+  const [disabled, setDisabled] = useState(true);
   const tags = useRequest(getListApartmentTags);
   const [form] = Form.useForm();
+  const onEditApartment = useRequest(editApartment, {
+    manual: true,
+    onSuccess: (res) => {
+      message.success("Sửa thông tin thành công");
+      refresh();
+    },
+    onError: (err) => {
+      message.error("Có lỗi xảy ra");
+    },
+  });
   useEffect(() => {
     setEditorLoaded(true);
   }, []);
@@ -40,11 +61,30 @@ const EditApartmentForm = ({
   }, [infoApartment]);
   const onFinish = (value: any) => {
     console.log(value);
+    onEditApartment.run(infoApartment?.id, {
+      ...value,
+      image: value?.image?.fileList?.map((item: any) =>
+        item?.response ? item?.response[0]?.path : item?.url
+      ),
+    });
   };
   return (
     <div>
+      <div
+        style={{
+          textAlign: "end",
+        }}
+      >
+        <Button
+          icon={<EditOutlined />}
+          onClick={() => {
+            setDisabled(!disabled);
+          }}
+        ></Button>
+      </div>
       <div className={styles.formData}>
         <Form
+          disabled={disabled}
           layout="vertical"
           form={form}
           onFinish={onFinish}
@@ -75,6 +115,7 @@ const EditApartmentForm = ({
           </Form.Item>
           <Form.Item name="content" label="Mô tả chi tiết">
             <Editor
+              disabled={disabled}
               data={data}
               name="description"
               onChange={(data: any) => {
@@ -108,9 +149,18 @@ const EditApartmentForm = ({
               </Form.Item>
             </Col>
           </Row>
+
+          <UploadImage images={infoApartment?.image} />
+
           <Row justify="center">
-            <Button className={styles.submitBtn}>
-              Nhập lại
+            <Button
+              className={styles.submitBtn}
+              onClick={() => {
+                refresh();
+                setDisabled(true);
+              }}
+            >
+              Hủy
             </Button>
             <Button
               type="primary"

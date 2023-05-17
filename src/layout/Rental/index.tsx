@@ -1,31 +1,56 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./index.module.scss";
 import {
   Breadcrumb,
+  Button,
   Carousel,
   Form,
   Input,
+  Pagination,
   Row,
   Select,
 } from "antd";
+import {
+  LeftOutlined,
+  RightOutlined,
+} from "@ant-design/icons";
 import ListItem from "./components/ListItem";
+import { useRequest } from "ahooks";
+import { getListRental } from "./service";
+import { useRef } from "react";
 const RentMainPage = () => {
+  const [filter, setFilter] = useState<{
+    page_size: number;
+    page_index: number;
+    search: string;
+    district: string;
+    price: string[];
+    type: string[];
+  }>({
+    page_index: 1,
+    page_size: 15,
+    search: "",
+    district: "",
+    price: [],
+    type: [],
+  });
+
   const options = [
     {
       label: "Đống đa",
-      value: 1,
+      value: "Đống Đa",
     },
     {
       label: "Hai bà trưng",
-      value: 2,
+      value: "Hai bà trưng",
     },
     {
       label: "Cầu giấy",
-      value: 3,
+      value: "Cầu giấy",
     },
     {
       label: "Mỹ đình",
-      value: 4,
+      value: "Mỹ đình",
     },
   ];
 
@@ -148,12 +173,23 @@ const RentMainPage = () => {
     },
   ];
 
+  const listRental = useRequest(getListRental, {
+    manual: true,
+    debounceWait: 500,
+  });
+
+  useEffect(() => {
+    listRental.run(filter);
+  }, [filter]);
+
+  const carouselRef = useRef();
+
   return (
     <div>
       <div className={styles.filterSection}>
         <div className={styles.container}>
           <div className={styles.filter}>
-            <Breadcrumb>
+            <Breadcrumb className={styles.Breadcrumb}>
               <Breadcrumb.Item>
                 <a href="/">Trang chủ</a>
               </Breadcrumb.Item>
@@ -162,34 +198,59 @@ const RentMainPage = () => {
               </Breadcrumb.Item>
             </Breadcrumb>
             <Form layout="inline" className="formFilter">
-              <Form.Item name="addressSearch">
+              <Form.Item>
                 <Input
+                  allowClear
                   placeholder="Nhập địa chỉ"
                   style={{
                     border: "1px solid rgba(0, 0, 0, 0.6)",
                   }}
+                  onChange={(e) =>
+                    setFilter((state) => ({
+                      ...state,
+                      search: e.target.value,
+                    }))
+                  }
                 />
               </Form.Item>
               <Form.Item name="district">
                 <Select
+                  allowClear
                   options={options}
                   placeholder="Khu vực"
+                  onChange={(val) => {
+                    setFilter((state) => ({
+                      ...state,
+                      district: val,
+                    }));
+                  }}
                 />
               </Form.Item>
               <Form.Item name="type">
                 <Select
+                  allowClear
+                  onChange={(val) => {
+                    setFilter((state) => ({
+                      ...state,
+                      type: val?.split("-"),
+                    }));
+                  }}
                   options={[
                     {
+                      label: "1 ngủ",
+                      value: "0-1",
+                    },
+                    {
                       label: "1 khách - 1 ngủ",
-                      value: 1,
+                      value: "1-1",
                     },
                     {
                       label: "1 khách - 2 ngủ",
-                      value: 2,
+                      value: "1-2",
                     },
                     {
                       label: "1 khách - 3 ngủ",
-                      value: 3,
+                      value: "1-3",
                     },
                   ]}
                   placeholder="Loại phòng"
@@ -197,22 +258,31 @@ const RentMainPage = () => {
               </Form.Item>
               <Form.Item name="price">
                 <Select
+                  onChange={(val) => {
+                    console.log(val);
+
+                    setFilter((state) => ({
+                      ...state,
+                      price: val?.split("-"),
+                    }));
+                  }}
+                  allowClear
                   options={[
                     {
-                      label: "0 - 3.000.000d",
-                      value: 1,
+                      label: "Nhỏ hơn 3.000.000d",
+                      value: "0-3000000",
                     },
                     {
                       label: "3.000.000 - 5.000.000d",
-                      value: 2,
+                      value: "3000000-5000000",
                     },
                     {
                       label: "5.000.000 - 8.000.000d",
-                      value: 3,
+                      value: "5000000-8000000",
                     },
                     {
                       label: "Lớn hơn 8.000.000d",
-                      value: 4,
+                      value: "8000000-100000000",
                     },
                   ]}
                   placeholder="Giá phòng"
@@ -224,32 +294,69 @@ const RentMainPage = () => {
       </div>
       <div className={styles.slideSection}>
         <div className={styles.container}>
-          <Carousel
-            dotPosition="bottom"
-            style={{
-              // textAlign: "center",
-              padding: "10px 0",
-            }}
-            slidesToShow={4}
-            slidesToScroll={4}
-          >
-            {mockUniversity.map((item) => (
-              <div>
+          <div className={styles.carousel}>
+            <Carousel
+              // dotPosition="bottom"
+              // className={styles.carousel}
+              dots={false}
+              ref={carouselRef}
+              style={{
+                // textAlign: "center",
+                padding: "10px 0",
+              }}
+              slidesToShow={4}
+              slidesToScroll={4}
+              // centerMode
+              // cssEase=""
+            >
+              {mockUniversity.map((item) => (
                 <div
                   key={item.id}
                   className={styles.slideItem}
                 >
-                  <b>{item.name}</b>
-                  <p>{`Có ${item.total} căn hộ cho thuê`}</p>
+                  <div>
+                    <b>{item.name}</b>
+                    <p>{`Có ${item.total} căn hộ cho thuê`}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </Carousel>
+              ))}
+            </Carousel>
+            <Button
+              className={styles.carouselIconPrev}
+              type="text"
+              icon={<LeftOutlined />}
+              onClick={() => carouselRef.current?.prev()}
+            ></Button>
+            <Button
+              type="text"
+              className={styles.carouselIconNext}
+              icon={<RightOutlined />}
+              onClick={() => carouselRef.current?.next()}
+            ></Button>
+          </div>
         </div>
       </div>
       <div className={styles.listItemSection}>
         <div className={styles.container}>
-          <ListItem listItem={mockData} />
+          <ListItem
+            listItem={listRental.data?.data}
+            loading={listRental?.loading}
+          />
+          {listRental?.data?.data?.data?.length > 0 && (
+            <div className={styles.pagination}>
+              <Pagination
+                current={filter.page_index}
+                onChange={(page) =>
+                  setFilter((state) => ({
+                    ...state,
+                    page_index: page,
+                  }))
+                }
+                total={listRental?.data?.data?.total}
+                pageSize={filter.page_size}
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>

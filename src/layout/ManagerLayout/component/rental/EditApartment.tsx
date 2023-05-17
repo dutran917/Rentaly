@@ -33,6 +33,7 @@ const EditApartment = () => {
       case "1":
         return (
           <EditApartmentForm
+            refresh={detailApartment.refresh}
             infoApartment={dataApartment?.data}
           />
         );

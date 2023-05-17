@@ -30,7 +30,10 @@ a {
   border-bottom: none;
 }
 .ant-menu-horizontal > .ant-menu-item a:hover {
-  color: #feb800;
+  color: #feb800 !important;
+}
+.ant-menu-item-active::before {
+  color: #feb800 !important;
 }
 .ant-layout {
   background: white !important;
@@ -95,4 +98,12 @@ a {
 
 .ant-upload.ant-upload-select {
   /* display: block !important; */
+}
+
+@media (max-width: 900px) {
+  .ant-form-inline {
+    flex-wrap: nowrap;
+    padding: 0 50px;
+    overflow: auto;
+  }
 }

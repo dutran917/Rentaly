@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 
-function Editor({ onChange, editorLoaded, name, data }) {
+function Editor({ onChange, editorLoaded, name, data, disabled }) {
   const editorRef = useRef();
   const { CKEditor, ClassicEditor } = editorRef.current || {};
 
@@ -15,6 +15,7 @@ function Editor({ onChange, editorLoaded, name, data }) {
     <div>
       {editorLoaded ? (
         <CKEditor
+          disabled={disabled}
           type=""
           data={data}
           name={name}

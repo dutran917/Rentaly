@@ -100,6 +100,7 @@ const ApartmentForm = () => {
             ]}
           >
             <Editor
+              disabled={false}
               data={data}
               name="description"
               onChange={(data: any) => {
@@ -157,7 +158,7 @@ const ApartmentForm = () => {
               </Form.Item>
             </Col>
           </Row>
-          <UploadImage />
+          <UploadImage images={[]} />
           <Row justify="center">
             <Button className={styles.submitBtn}>
               Nhập lại

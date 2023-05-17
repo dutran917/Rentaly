@@ -13,6 +13,15 @@ interface CreateApartmentInput {
   image: string[];
   tags: number[];
 }
+
+interface EditApartmentInput {
+  title: string;
+  subtitle: string;
+  content: string;
+  image: string[];
+  tags: number[];
+}
+
 interface CreateRoomInput {
   title: string;
   price: number;
@@ -26,6 +35,16 @@ export const createApartment = (
   input: CreateApartmentInput
 ) => {
   return privateRequest("POST", API_PATH.CREATE_APARTMENT, {
+    ...input,
+  });
+};
+
+export const editApartment = (
+  apartmentId: number,
+  input: EditApartmentInput
+) => {
+  return privateRequest("PATCH", API_PATH.EDIT_APARTMENT, {
+    apartmentId,
     ...input,
   });
 };
