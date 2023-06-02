@@ -298,6 +298,7 @@ const RentMainPage = () => {
             <Carousel
               // dotPosition="bottom"
               // className={styles.carousel}
+
               dots={false}
               ref={carouselRef}
               style={{
@@ -306,7 +307,25 @@ const RentMainPage = () => {
               }}
               slidesToShow={4}
               slidesToScroll={4}
-              // centerMode
+              responsive={[
+                {
+                  breakpoint: 900,
+                  settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                    centerMode: false,
+                  },
+                },
+                {
+                  breakpoint: 600,
+                  settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                    centerMode: false,
+                  },
+                },
+              ]}
+
               // cssEase=""
             >
               {mockUniversity.map((item) => (
@@ -322,12 +341,20 @@ const RentMainPage = () => {
               ))}
             </Carousel>
             <Button
+              style={{
+                background: "rgba(0, 0, 0, 0.3)",
+                borderRadius: "50%",
+              }}
               className={styles.carouselIconPrev}
               type="text"
               icon={<LeftOutlined />}
               onClick={() => carouselRef.current?.prev()}
             ></Button>
             <Button
+              style={{
+                background: "rgba(0, 0, 0, 0.3)",
+                borderRadius: "50%",
+              }}
               type="text"
               className={styles.carouselIconNext}
               icon={<RightOutlined />}

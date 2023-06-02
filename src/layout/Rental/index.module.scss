@@ -37,6 +37,7 @@
     // width: 20%;
     div {
       text-align: center;
+      width: 250px;
       margin: 5px 15px;
       color: #222;
       display: inline-block;
@@ -52,6 +53,14 @@
       }
       &:hover {
         color: #feb800;
+      }
+      @media (max-width: 1200px) {
+        width: unset;
+        height: 100px;
+      }
+      @media (max-width: 600px) {
+        width: unset;
+        height: 100px;
       }
     }
   }
