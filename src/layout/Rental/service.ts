@@ -9,6 +9,13 @@ interface GetListRentalInput {
   price: string[];
   type: string[];
 }
+
+interface GetListRoom {
+  apartmentId: number;
+  bed_room: number;
+  living_room: number;
+}
+
 export const getListRental = (
   query: GetListRentalInput
 ) => {
@@ -35,4 +42,13 @@ export const getListRental = (
 
 export const getDetailApartment = (id: number) => {
   return request.get(API_PATH.GET_DETAIL_APARTMENT(id));
+};
+
+export const getListRoom = (query: GetListRoom) => {
+  let q = `apartmentId=${query.apartmentId}&bed_room=${query.bed_room}&living_room=${query.living_room}`;
+  return request.get(API_PATH.GET_LIST_ROOM + "?" + q);
+};
+
+export const getRoom = (roomId: number) => {
+  return request.get(API_PATH.GET_ROOM_DETAIL(roomId));
 };

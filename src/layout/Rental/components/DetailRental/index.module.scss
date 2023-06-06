@@ -1,5 +1,5 @@
 .wrapper {
-  height: calc(100vh - 128px);
+  // height: calc(100vh - 128px);
   .container {
     max-width: 1200px;
     margin: auto;
@@ -83,6 +83,125 @@
       @media (max-width: 600px) {
         width: 100%;
         height: 150px;
+      }
+    }
+  }
+
+  .servicePriceRow {
+    .servicePrice {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      display: flex;
+      justify-content: space-between;
+      padding: 0 15px;
+    }
+  }
+  .cardRoomBooking {
+    box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.08);
+    margin-left: 50px;
+    width: 100%;
+    padding: 25px;
+    .cardRoomBookingTitle {
+      text-align: end;
+      font-weight: 600;
+      font-size: 30px;
+    }
+    .roomBooking {
+      display: flex;
+      flex-direction: column;
+      .roomBookingDate {
+        margin: 20px 0;
+      }
+      .roomBookingBtn1 {
+        margin: 20px 0;
+        width: 100%;
+        color: #fff;
+        font-weight: 600;
+        text-align: center;
+        background-image: linear-gradient(
+          90deg,
+          #f65e38 0,
+          #f68a39 51%,
+          #f65e38
+        );
+        background-size: 200% auto;
+        padding: 10px 30px;
+        cursor: pointer;
+        border-radius: 10px;
+      }
+      .roomBookingBtn2 {
+        margin: 20px 0;
+        width: 100%;
+        color: #fff;
+        font-weight: 600;
+        text-align: center;
+        background-size: 200% auto;
+        padding: 10px 30px;
+        cursor: pointer;
+        border-radius: 10px;
+        background-image: linear-gradient(
+          90deg,
+          #3e9728 0,
+          #25b43d 51%,
+          #319133
+        );
+      }
+    }
+  }
+
+  .roomDescription {
+    margin: 20px 0;
+    .subtitle {
+      p {
+        font-size: 24px !important;
+        margin: 0 0 10px;
+        font-weight: 500;
+      }
+    }
+    .content {
+      strong {
+        font-size: 16px;
+      }
+    }
+  }
+
+  .roomList {
+    .roomListTitle {
+      p {
+        font-size: 24px !important;
+        margin: 0 0 10px;
+        font-weight: 500;
+      }
+    }
+    .roomType {
+      button {
+        margin: 0 5px;
+        border-radius: 10px;
+      }
+    }
+  }
+  .roomListFiltered {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 20px 0;
+    div {
+      width: 15%;
+      margin-right: 10px;
+      padding: 2px 0;
+      min-width: 58px;
+      display: inline-block;
+      background: #5bb7e545;
+      margin-bottom: 5px;
+      text-align: center;
+      border-radius: 5px;
+      border: 1px solid #08c;
+      color: #645e5e;
+      font-size: 13px;
+      cursor: pointer;
+      &:hover {
+        background: #0077b5;
+        color: #fff;
+        font-weight: 600;
+        border: 1px solid #0077b5;
       }
     }
   }
