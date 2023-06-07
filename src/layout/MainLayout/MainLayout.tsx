@@ -18,7 +18,9 @@ const items = [
   },
   {
     key: "3",
-    label: <Link href="/register">Bạn là chủ nhà</Link>,
+    label: (
+      <Link href="/manager-register">Bạn là chủ nhà</Link>
+    ),
   },
 ];
 
@@ -31,7 +33,7 @@ const MainLayout = ({ children }: { children: any }) => {
         return ["1"];
       case "/rental":
         return ["2"];
-      case "/register":
+      case "/manager-register":
         return ["3"];
     }
   };
