@@ -1,0 +1,78 @@
+.banner {
+  background: url("/images/background-lessor.jpg");
+  display: flex;
+  background-size: inherit;
+  position: relative;
+  padding-top: 60px;
+  padding-bottom: 60px;
+  z-index: 1;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow: hidden;
+  height: 789px;
+  .bannerrContainer {
+    margin: auto;
+    .bannerInfo {
+      padding: 40px 30px;
+      color: #fff;
+      background: #00000063;
+      max-width: 900px;
+      .bannerInfoTitle {
+        font-size: 32px;
+        line-height: 45px;
+        margin-bottom: 8px;
+      }
+      .bannerInfoContent {
+        font-size: 20px;
+        line-height: 30px;
+      }
+      .bannerInfoScroll {
+        font-size: 18px;
+        padding: 15px;
+        background-color: #fdc209;
+        color: #000;
+        font-weight: 600;
+        margin-top: 35px;
+        display: inline-block;
+        cursor: pointer;
+        transition: ease-in-out 0.2s;
+        &:hover {
+          color: #fff;
+          background: #00000061;
+        }
+      }
+    }
+  }
+}
+
+.managerRegister {
+  background-color: #fdc209;
+  .managerRegisterContainer {
+    width: 1100px;
+    padding: 30px;
+    margin-right: auto;
+    margin-left: auto;
+    .registerTitle {
+      font-weight: 400;
+      letter-spacing: 0;
+      font-size: 28px;
+    }
+    .resgisterSubContent {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+    .registerInputItem {
+      background: #fdc209;
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      border: 1px solid #616263;
+      color: #000;
+      outline: none;
+      :focus {
+        border: none;
+      }
+    }
+  }
+}
