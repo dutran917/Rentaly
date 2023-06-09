@@ -30,7 +30,7 @@ const DetailRental = () => {
   const [listRoom, setListRoom] = useState([]);
   const [selectedFilter, setSelectedFilter] =
     useState(null);
-  const [selectedRoom, setSelectedRoom] = useState();
+  const [selectedRoom, setSelectedRoom] = useState<any>();
   const data = useRequest(getDetailApartment, {
     manual: true,
     onSuccess: (res) => {
@@ -317,6 +317,11 @@ const DetailRental = () => {
                       {listRoom?.map((item: any) => (
                         <div
                           key={item?.id}
+                          className={
+                            selectedRoom?.id === item?.id
+                              ? styles.selectedRoom
+                              : styles.room
+                          }
                           onClick={() => {
                             roomDetail.run(item?.id);
                           }}
@@ -324,7 +329,9 @@ const DetailRental = () => {
                       ))}
                     </div>
                   </Col>
-                  <Col flex="1 0">detail</Col>
+                  <Col flex="1 0">
+                    <div>asdasdd</div>
+                  </Col>
                 </Row>
               </div>
             </div>
@@ -332,7 +339,7 @@ const DetailRental = () => {
           <Col flex="1 0">
             <div className={styles.cardRoomBooking}>
               <div className={styles.cardRoomBookingTitle}>
-                {formatNumber(detail?.rooms[0]?.price) +
+                {formatNumber(selectedRoom?.price) +
                   "đ/tháng"}
               </div>
               <div className={styles.roomBooking}>
@@ -344,7 +351,7 @@ const DetailRental = () => {
                   Đặt lịch xem phòng
                 </div>
                 <div className={styles.roomBookingBtn2}>
-                  Đặt phòng
+                  Đặt phòng {selectedRoom?.title}
                 </div>
               </div>
             </div>
