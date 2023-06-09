@@ -1,4 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  useLayoutEffect,
+} from "react";
 import styles from "./index.module.scss";
 import { useRouter } from "next/router";
 import { useRequest } from "ahooks";
@@ -21,6 +26,7 @@ import {
   DatePicker,
   Row,
   Space,
+  Spin,
 } from "antd";
 import Link from "next/link";
 import { formatNumber } from "@/utils/helper";
@@ -35,7 +41,6 @@ const DetailRental = () => {
     manual: true,
     onSuccess: (res) => {
       setListRoom(res?.data?.rooms);
-      setSelectedRoom(res?.data?.rooms?.[0]);
     },
   });
   const filterListRoom = useRequest(getListRoom, {
@@ -47,9 +52,8 @@ const DetailRental = () => {
 
   const roomDetail = useRequest(getRoom, {
     manual: true,
-    onSuccess: (res) => {
-      console.log(res);
 
+    onSuccess: (res) => {
       setSelectedRoom(res?.data);
     },
   });
@@ -60,6 +64,11 @@ const DetailRental = () => {
       data.run(Number(id));
     }
   }, [id]);
+  useEffect(() => {
+    if (detail) {
+      roomDetail.run(detail?.rooms?.[0]?.id);
+    }
+  }, [detail]);
   const carouselRef = useRef();
 
   const checkListRoom = (rooms: any[]) => {
@@ -97,11 +106,24 @@ const DetailRental = () => {
     });
     return { result, type };
   };
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const handleScroll = () => {
+    const position = window.pageYOffset;
+    console.log(position);
 
-  // useEffect(() => {
-  //   setListRoom(detail?.rooms);
-  // }, [data]);
-  console.log(listRoom);
+    setScrollPosition(position);
+  };
+
+  useEffect(() => {
+    window.addEventListener(
+      "scroll",
+      function () {
+        console.log("ss");
+      },
+      false
+    );
+  }, []);
+  console.log(scrollPosition);
 
   return (
     <div className={styles.wrapper}>
@@ -116,7 +138,7 @@ const DetailRental = () => {
           <Breadcrumb.Item>{detail?.title}</Breadcrumb.Item>
         </Breadcrumb>
       </div>
-      <div className={styles.carousel}>
+      <div className={styles.carousel} id="carousel">
         <Carousel
           dots={false}
           ref={carouselRef}
@@ -127,7 +149,7 @@ const DetailRental = () => {
           slidesToShow={2}
           slidesToScroll={1}
         >
-          {detail?.image?.map((item: any, i) => (
+          {detail?.image?.map((item: any, i: number) => (
             <div className={styles.slideItem} key={i}>
               <img src={item.url} />
             </div>
@@ -330,14 +352,136 @@ const DetailRental = () => {
                     </div>
                   </Col>
                   <Col flex="1 0">
-                    <div>asdasdd</div>
+                    <div
+                      className={styles.RoomFilteredDetail}
+                    >
+                      <div
+                        className={styles.RoomFilteredTitle}
+                      >
+                        P{selectedRoom?.title}
+                      </div>
+                      <div
+                        className={styles.RoomFilteredItem}
+                      >
+                        <strong>Giá thuê phòng</strong>
+                        <span>
+                          <strong
+                            style={{
+                              fontSize: "18px",
+                            }}
+                          >
+                            {formatNumber(
+                              selectedRoom?.price
+                            )}
+                            đ
+                          </strong>
+                          /tháng
+                        </span>
+                      </div>
+                      <div
+                        className={styles.RoomFilteredItem}
+                      >
+                        <strong>Loại phòng</strong>
+                        <span>
+                          {`Phòng ${
+                            selectedRoom?.bed_room
+                          } ngủ - ${
+                            selectedRoom?.living_room
+                              ? `${selectedRoom?.living_room} khách`
+                              : ""
+                          }`}
+                        </span>
+                      </div>
+                      <div
+                        className={styles.RoomFilteredItem}
+                      >
+                        <strong>Diện tích</strong>
+                        <span>{selectedRoom?.area}m2</span>
+                      </div>
+                      <div
+                        className={styles.RoomFilteredItem}
+                      >
+                        <strong>Số người ở tối đa</strong>
+                        <span>
+                          {selectedRoom?.maximum} người
+                        </span>
+                      </div>
+                      <div
+                        className={styles.RoomFilteredItem}
+                      >
+                        <strong>Tầng</strong>
+                        <span>{selectedRoom?.floor}</span>
+                      </div>
+                    </div>
                   </Col>
+                  <div className={styles.tagInApartment}>
+                    <div className={styles.subtitle}>
+                      <p>✺ Tiện nghi chỗ ở</p>
+                    </div>
+                    <div className={styles.subtitleTag}>
+                      ✵ Tiện nghi của phòng{" "}
+                      {selectedRoom?.title}
+                    </div>
+                    {roomDetail.loading ? (
+                      <Spin />
+                    ) : (
+                      <div className={styles.listTag}>
+                        {selectedRoom?.TagsInRoom?.map(
+                          (item: any, i: number) => (
+                            <div
+                              key={i}
+                              className={styles.listTagItem}
+                            >
+                              <img
+                                src={item?.tag?.icon}
+                                style={{
+                                  width: "20px",
+                                  height: "20px",
+                                  marginRight: "5px",
+                                }}
+                              />
+                              <p>{item?.tag?.name}</p>
+                            </div>
+                          )
+                        )}
+                      </div>
+                    )}
+                    <div className={styles.subtitleTag}>
+                      ✵ Tiện nghi chung của tòa nhà{" "}
+                    </div>
+                    <div className={styles.listTag}>
+                      {detail?.TagsInApartment?.map(
+                        (item: any, i: number) => (
+                          <div
+                            key={i}
+                            className={styles.listTagItem}
+                          >
+                            <img
+                              src={item?.tag?.icon}
+                              style={{
+                                width: "20px",
+                                height: "20px",
+                                marginRight: "5px",
+                              }}
+                            />
+                            <p>{item?.tag?.name}</p>
+                          </div>
+                        )
+                      )}
+                    </div>
+                  </div>
                 </Row>
               </div>
             </div>
           </Col>
-          <Col flex="1 0">
-            <div className={styles.cardRoomBooking}>
+          <Col
+            flex="1 0"
+            className={styles.cardRoomBookingContainer}
+          >
+            <div
+              className={styles.cardRoomBooking}
+              id="card"
+            >
               <div className={styles.cardRoomBookingTitle}>
                 {formatNumber(selectedRoom?.price) +
                   "đ/tháng"}

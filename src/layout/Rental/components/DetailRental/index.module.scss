@@ -95,10 +95,66 @@
       padding: 0 15px;
     }
   }
+
+  // .cardRoomBookingFixed {
+  //   position: fixed;
+  //   top: 80px;
+  //   // right: 60px;
+  //   width: 400px;
+  //   box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.08);
+  //   margin-left: 50px;
+  //   padding: 25px;
+  //   .cardRoomBookingTitle {
+  //     text-align: end;
+  //     font-weight: 600;
+  //     font-size: 30px;
+  //   }
+  //   .roomBooking {
+  //     display: flex;
+  //     flex-direction: column;
+  //     .roomBookingDate {
+  //       margin: 20px 0;
+  //     }
+  //     .roomBookingBtn1 {
+  //       margin: 20px 0;
+  //       width: 100%;
+  //       color: #fff;
+  //       font-weight: 600;
+  //       text-align: center;
+  //       background-image: linear-gradient(
+  //         90deg,
+  //         #f65e38 0,
+  //         #f68a39 51%,
+  //         #f65e38
+  //       );
+  //       background-size: 200% auto;
+  //       padding: 10px 30px;
+  //       cursor: pointer;
+  //       border-radius: 10px;
+  //     }
+  //     .roomBookingBtn2 {
+  //       margin: 20px 0;
+  //       width: 100%;
+  //       color: #fff;
+  //       font-weight: 600;
+  //       text-align: center;
+  //       background-size: 200% auto;
+  //       padding: 10px 30px;
+  //       cursor: pointer;
+  //       border-radius: 10px;
+  //       background-image: linear-gradient(
+  //         90deg,
+  //         #3e9728 0,
+  //         #25b43d 51%,
+  //         #319133
+  //       );
+  //     }
+  //   }
+  // }
   .cardRoomBooking {
+    width: 400px;
     box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.08);
     margin-left: 50px;
-    width: 100%;
     padding: 25px;
     .cardRoomBookingTitle {
       text-align: end;
@@ -148,15 +204,15 @@
     }
   }
 
+  .subtitle {
+    p {
+      font-size: 24px !important;
+      margin: 0 0 10px;
+      font-weight: 500;
+    }
+  }
   .roomDescription {
     margin: 20px 0;
-    .subtitle {
-      p {
-        font-size: 24px !important;
-        margin: 0 0 10px;
-        font-weight: 500;
-      }
-    }
     .content {
       strong {
         font-size: 16px;
@@ -220,6 +276,59 @@
 
       font-size: 13px;
       cursor: pointer;
+    }
+  }
+
+  .RoomFilteredDetail {
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin: 20px 0;
+    .RoomFilteredTitle {
+      background: #4a4a4a;
+      color: #fff;
+      padding: 15px;
+      font-weight: 700;
+      font-size: 16px;
+    }
+    .RoomFilteredItem {
+      font-family: inherit;
+      font-size: 100%;
+      font-weight: inherit;
+      vertical-align: baseline;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      font-size: 14px;
+      padding: 8px 10px;
+      margin: 0;
+      border-bottom: 1px solid #ededed;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      letter-spacing: 0;
+    }
+  }
+
+  .tagInApartment {
+    .subtitleTag {
+      font-size: 20px;
+      margin: 0 0 10px;
+      font-weight: 500;
+      // margin-left: 15px;
+    }
+    .listTag {
+      display: flex;
+      flex-wrap: wrap;
+      .listTagItem {
+        width: 30%;
+        display: flex;
+        align-items: flex-start;
+        margin: 5px;
+      }
     }
   }
 }
