@@ -29,6 +29,13 @@ const ApartmentForm = () => {
   const createRequest = useRequest(createApartment, {
     manual: true,
     onSuccess: (res) => {
+      if (typeof window !== "undefined") {
+        // Client-side-only code
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }
       router.push(
         `/manager/rental-management/${res.data?.id}`
       );

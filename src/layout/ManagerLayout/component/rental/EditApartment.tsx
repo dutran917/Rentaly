@@ -19,6 +19,9 @@ const EditApartment = () => {
   const detailApartment = useRequest(getDetailApartment, {
     manual: true,
     onSuccess: (res) => {
+      if (typeof window !== "undefined") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
       setDataApartment(res.data);
     },
   });

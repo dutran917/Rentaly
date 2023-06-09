@@ -1,9 +1,26 @@
+$breakpoints: (
+  1200px: 10px,
+  1000px: 15px,
+  800px: 20px,
+);
 .wrapper {
   // height: calc(100vh - 128px);
   .container {
     max-width: 1200px;
     margin: auto;
   }
+  .wrapperContent {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    .mainContent {
+      width: 65%;
+    }
+    .subContent {
+      width: 30%;
+    }
+  }
+
   .carousel {
     position: relative;
     // @media (max-width: 900px) {
@@ -96,62 +113,62 @@
     }
   }
 
-  // .cardRoomBookingFixed {
-  //   position: fixed;
-  //   top: 80px;
-  //   // right: 60px;
-  //   width: 400px;
-  //   box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.08);
-  //   margin-left: 50px;
-  //   padding: 25px;
-  //   .cardRoomBookingTitle {
-  //     text-align: end;
-  //     font-weight: 600;
-  //     font-size: 30px;
-  //   }
-  //   .roomBooking {
-  //     display: flex;
-  //     flex-direction: column;
-  //     .roomBookingDate {
-  //       margin: 20px 0;
-  //     }
-  //     .roomBookingBtn1 {
-  //       margin: 20px 0;
-  //       width: 100%;
-  //       color: #fff;
-  //       font-weight: 600;
-  //       text-align: center;
-  //       background-image: linear-gradient(
-  //         90deg,
-  //         #f65e38 0,
-  //         #f68a39 51%,
-  //         #f65e38
-  //       );
-  //       background-size: 200% auto;
-  //       padding: 10px 30px;
-  //       cursor: pointer;
-  //       border-radius: 10px;
-  //     }
-  //     .roomBookingBtn2 {
-  //       margin: 20px 0;
-  //       width: 100%;
-  //       color: #fff;
-  //       font-weight: 600;
-  //       text-align: center;
-  //       background-size: 200% auto;
-  //       padding: 10px 30px;
-  //       cursor: pointer;
-  //       border-radius: 10px;
-  //       background-image: linear-gradient(
-  //         90deg,
-  //         #3e9728 0,
-  //         #25b43d 51%,
-  //         #319133
-  //       );
-  //     }
-  //   }
-  // }
+  .cardRoomBookingFixed {
+    position: fixed;
+    top: 90px;
+    width: 400px;
+    box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.08);
+    margin-left: 50px;
+    padding: 25px;
+    .cardRoomBookingTitle {
+      text-align: end;
+      font-weight: 600;
+      font-size: 30px;
+    }
+    .roomBooking {
+      display: flex;
+      flex-direction: column;
+      .roomBookingDate {
+        margin: 20px 0;
+      }
+      .roomBookingBtn1 {
+        margin: 20px 0;
+        width: 100%;
+        color: #fff;
+        font-weight: 600;
+        text-align: center;
+        background-image: linear-gradient(
+          90deg,
+          #f65e38 0,
+          #f68a39 51%,
+          #f65e38
+        );
+        background-size: 200% auto;
+        padding: 10px 30px;
+        cursor: pointer;
+        border-radius: 10px;
+      }
+      .roomBookingBtn2 {
+        margin: 20px 0;
+        width: 100%;
+        color: #fff;
+        font-weight: 600;
+        text-align: center;
+        background-size: 200% auto;
+        padding: 10px 30px;
+        cursor: pointer;
+        border-radius: 10px;
+        background-image: linear-gradient(
+          90deg,
+          #3e9728 0,
+          #25b43d 51%,
+          #319133
+        );
+      }
+    }
+  }
   .cardRoomBooking {
+    position: relative;
     width: 400px;
     box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.08);
     margin-left: 50px;
@@ -328,6 +345,26 @@
         display: flex;
         align-items: flex-start;
         margin: 5px;
+      }
+    }
+  }
+  @each $width, $margin in $breakpoints {
+    @if $width == 800px {
+      @media screen and (max-width: $width) {
+        .wrapperContent {
+          flex-direction: column;
+          align-items: center;
+          .mainContent {
+            width: 100%;
+          }
+          .subContent {
+            width: 100%;
+          }
+        }
+        .cardRoomBookingFixed {
+          position: unset;
+          width: auto;
+        }
       }
     }
   }

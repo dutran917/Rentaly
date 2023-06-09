@@ -14,8 +14,6 @@ body {
   font-family: "Asap", sans-serif;
   /* font-family: "Montserrat", sans-serif; */
   /* font-weight: 400; */
-  max-width: 100vw;
-  overflow-x: hidden;
 }
 
 a {

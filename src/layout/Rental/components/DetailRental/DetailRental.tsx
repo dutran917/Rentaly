@@ -107,21 +107,11 @@ const DetailRental = () => {
     return { result, type };
   };
   const [scrollPosition, setScrollPosition] = useState(0);
-  const handleScroll = () => {
-    const position = window.pageYOffset;
-    console.log(position);
-
-    setScrollPosition(position);
-  };
-
+  const [scroll, setScroll] = useState(false);
   useEffect(() => {
-    window.addEventListener(
-      "scroll",
-      function () {
-        console.log("ss");
-      },
-      false
-    );
+    window.addEventListener("scroll", () => {
+      setScroll(window.scrollY > 700);
+    });
   }, []);
   console.log(scrollPosition);
 
@@ -181,9 +171,9 @@ const DetailRental = () => {
         </div>
       </div>
       <div className={styles.container}>
-        <Row>
-          <Col
-            flex="3 0"
+        <div className={styles.wrapperContent}>
+          <div
+            className={styles.mainContent}
             style={{
               padding: "15px",
             }}
@@ -473,13 +463,14 @@ const DetailRental = () => {
                 </Row>
               </div>
             </div>
-          </Col>
-          <Col
-            flex="1 0"
-            className={styles.cardRoomBookingContainer}
-          >
+          </div>
+          <div className={styles.subContent}>
             <div
-              className={styles.cardRoomBooking}
+              className={
+                scroll
+                  ? styles.cardRoomBookingFixed
+                  : styles.cardRoomBooking
+              }
               id="card"
             >
               <div className={styles.cardRoomBookingTitle}>
@@ -499,8 +490,8 @@ const DetailRental = () => {
                 </div>
               </div>
             </div>
-          </Col>
-        </Row>
+          </div>
+        </div>
       </div>
     </div>
   );

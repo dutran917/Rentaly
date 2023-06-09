@@ -66,7 +66,7 @@ const UploadImage = ({ images }: { images: any[] }) => {
         name="image"
         rules={[
           {
-            required: true,
+            required: images?.length === 0 ? true : false,
             message: "Vui lòng chọn ảnh",
           },
           {

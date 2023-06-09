@@ -13,7 +13,7 @@ function Editor({ onChange, editorLoaded, name, data, disabled }) {
 
   return (
     <div>
-      {editorLoaded ? (
+      {editorLoaded && editorRef.current?.CKEditor ? (
         <CKEditor
           disabled={disabled}
           type=""
