@@ -1,5 +1,6 @@
 export const API_PATH = {
   //manager
+  MANAGER_SIGNUP: "/auth/register-user",
   MANAGER_LOGIN: "/auth/login",
   MANAGER_INFO: "/user/info-user",
   CREATE_APARTMENT: "/post/apartment",

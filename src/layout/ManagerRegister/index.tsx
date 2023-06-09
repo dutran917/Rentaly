@@ -1,7 +1,44 @@
 import React from "react";
 import styles from "./index.module.scss";
-import { Button, Col, Form, Input, Row } from "antd";
+import {
+  Button,
+  Col,
+  Form,
+  Input,
+  Row,
+  message,
+  notification,
+} from "antd";
+import { SendOutlined } from "@ant-design/icons";
+import { useRequest } from "ahooks";
+import { registerLessor } from "./service";
 const ManagerRegister = () => {
+  const [form] = Form.useForm();
+  const register = useRequest(registerLessor, {
+    manual: true,
+    onSuccess: (res) => {
+      notification.success({
+        message:
+          "Đã gửi đơn đăng ký, chúng tôi sẽ gửi Email trong thời gian sớm nhất!",
+      });
+    },
+    onError: (err) => {
+      console.log(err);
+
+      notification.error({
+        message: "Thông tin bạn nhập không hợp lệ",
+      });
+    },
+  });
+  const onSubmit = (val: any) => {
+    console.log(val);
+    register.run({
+      email: val?.email,
+      full_name: val?.full_name,
+      phone: val?.phone,
+    });
+    form.resetFields();
+  };
   return (
     <div>
       <div className={styles.banner}>
@@ -49,11 +86,12 @@ const ManagerRegister = () => {
               <p className={styles.resgisterSubContent}>
                 THÔNG TIN CỦA QUÝ KHÁCH HÀNG
               </p>
-              <Form>
+              <Form form={form} onFinish={onSubmit}>
                 <Row justify="space-between">
                   <Col span={10}>
-                    <Form.Item name="name">
+                    <Form.Item name="full_name">
                       <input
+                        autoComplete="off"
                         placeholder="Họ và tên"
                         className={styles.registerInputItem}
                       />
@@ -62,6 +100,7 @@ const ManagerRegister = () => {
                   <Col span={10}>
                     <Form.Item name="phone">
                       <input
+                        autoComplete="off"
                         placeholder="Số điện thoại"
                         className={styles.registerInputItem}
                       />
@@ -70,6 +109,7 @@ const ManagerRegister = () => {
                 </Row>
                 <Form.Item name="email">
                   <input
+                    autoComplete="off"
                     placeholder="Email"
                     className={styles.registerInputItem}
                   />
@@ -82,7 +122,15 @@ const ManagerRegister = () => {
                   />
                 </Form.Item>
                 <Row justify="end">
-                  <Button icon>Gửi thông tin</Button>
+                  <Button
+                    danger
+                    type="primary"
+                    htmlType="submit"
+                    icon={<SendOutlined />}
+                    loading={register.loading}
+                  >
+                    Gửi thông tin
+                  </Button>
                 </Row>
               </Form>
             </Col>
