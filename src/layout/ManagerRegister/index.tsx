@@ -54,7 +54,17 @@ const ManagerRegister = () => {
               thuê phòng, quản lý các phòng trọ, đảm bảo an
               ninh, đi thu tiền phòng,..."
             </p>
-            <div className={styles.bannerInfoScroll}>
+            <div
+              className={styles.bannerInfoScroll}
+              onClick={() => {
+                if (typeof window !== "undefined") {
+                  window.scrollTo({
+                    top: 700,
+                    behavior: "smooth",
+                  });
+                }
+              }}
+            >
               HÃY ĐỂ RENTALY GIÚP BẠN
             </div>
           </div>
@@ -65,15 +75,8 @@ const ManagerRegister = () => {
           <div className={styles.registerTitle}>
             <p>Đăng ký làm đối tác với Rentaly</p>
           </div>
-          <Row
-            justify="space-between"
-            style={
-              {
-                //   margin: "18px 0",
-              }
-            }
-          >
-            <Col span={9}>
+          <div className={styles.resgisterContent}>
+            <div className={styles.resgisterContent1}>
               <p className={styles.resgisterSubContent}>
                 BẠN CHỈ CẦN CÓ NHÀ TRỌ CHO THUÊ VÀ NHẬN THU
                 NHẬP ỔN ĐỊNH.
@@ -81,33 +84,76 @@ const ManagerRegister = () => {
               <p className={styles.resgisterSubContent}>
                 CÒN LẠI LÀ NHIỆM VỤ CỦA CHÚNG TÔI.
               </p>
-            </Col>
-            <Col span={14}>
+            </div>
+            <div className={styles.resgisterContent2}>
               <p className={styles.resgisterSubContent}>
                 THÔNG TIN CỦA QUÝ KHÁCH HÀNG
               </p>
               <Form form={form} onFinish={onSubmit}>
-                <Row justify="space-between">
-                  <Col span={10}>
-                    <Form.Item name="full_name">
-                      <input
-                        autoComplete="off"
-                        placeholder="Họ và tên"
-                        className={styles.registerInputItem}
-                      />
-                    </Form.Item>
-                  </Col>
-                  <Col span={10}>
-                    <Form.Item name="phone">
-                      <input
-                        autoComplete="off"
-                        placeholder="Số điện thoại"
-                        className={styles.registerInputItem}
-                      />
-                    </Form.Item>
-                  </Col>
-                </Row>
-                <Form.Item name="email">
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Form.Item
+                    style={{
+                      width: "48%",
+                    }}
+                    name="full_name"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Vui lòng nhập",
+                      },
+                    ]}
+                  >
+                    <input
+                      autoComplete="off"
+                      placeholder="Họ và tên"
+                      className={styles.registerInputItem}
+                    />
+                  </Form.Item>
+                  <Form.Item
+                    name="phone"
+                    style={{
+                      width: "48%",
+                    }}
+                    rules={[
+                      {
+                        required: true,
+                        message: "Vui lòng nhập",
+                      },
+                      {
+                        pattern:
+                          /(84|0[3|5|7|8|9])+([0-9]{8})\b/,
+                        message:
+                          "Vui lòng nhập đúng định dạng",
+                      },
+                    ]}
+                  >
+                    <input
+                      autoComplete="off"
+                      placeholder="Số điện thoại"
+                      className={styles.registerInputItem}
+                    />
+                  </Form.Item>
+                </div>
+
+                <Form.Item
+                  name="email"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Vui lòng nhập",
+                    },
+                    {
+                      type: "email",
+                      message:
+                        "Vui lòng nhập đúng định dạng",
+                    },
+                  ]}
+                >
                   <input
                     autoComplete="off"
                     placeholder="Email"
@@ -133,8 +179,8 @@ const ManagerRegister = () => {
                   </Button>
                 </Row>
               </Form>
-            </Col>
-          </Row>
+            </div>
+          </div>
         </div>
       </div>
     </div>

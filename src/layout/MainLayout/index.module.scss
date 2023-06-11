@@ -25,6 +25,27 @@
   position: sticky;
   top: 0;
   z-index: 999;
+  display: flex;
+  justify-content: space-between;
+  .menuWrapper {
+    display: flex;
+    justify-content: space-between;
+    .menuBar {
+      justify-content: end;
+      font-weight: 600;
+      font-size: 16px;
+    }
+    .profile {
+      .loginBtn {
+        font-weight: 600;
+        font-size: 16px;
+        transition: ease-in-out 0.2s;
+        &:hover {
+          color: var(--base-color);
+        }
+      }
+    }
+  }
 }
 .content {
   min-height: calc(100vh - 64px);
@@ -43,13 +64,5 @@
     &:hover {
       color: #feb800;
     }
-  }
-}
-.menuBar {
-  justify-content: end;
-  font-weight: 600;
-  font-size: 16px;
-  a {
-    color: #feb800;
   }
 }

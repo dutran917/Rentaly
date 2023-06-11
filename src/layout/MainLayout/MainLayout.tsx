@@ -1,9 +1,24 @@
 import type { MenuProps } from "antd";
-import { Layout, Menu } from "antd";
+import {
+  Avatar,
+  Button,
+  Dropdown,
+  Layout,
+  Menu,
+} from "antd";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useState } from "react";
 import style from "./index.module.scss";
+import { useProfile } from "@/store/ManagerProfile/useProfile";
+import { deleteCookie } from "cookies-next";
+import { LoginOutlined } from "@ant-design/icons";
+import LoginModal from "./Component/LoginModal";
+import {
+  UserOutlined,
+  LogoutOutlined,
+} from "@ant-design/icons";
+import { initialUserProfile } from "@/store/ManagerProfile/profile";
 const { Header, Content, Footer } = Layout;
 
 const items = [
@@ -26,7 +41,8 @@ const items = [
 
 const MainLayout = ({ children }: { children: any }) => {
   const router = useRouter();
-  console.log(router.pathname);
+  const { setProfileUser, profileUser } = useProfile();
+  const [isOpenLogin, setIsOpenLogin] = useState(false);
   const menuOnActive = () => {
     switch (router.pathname) {
       case "/":
@@ -37,6 +53,12 @@ const MainLayout = ({ children }: { children: any }) => {
         return ["3"];
     }
   };
+  const handleLogout = () => {
+    setProfileUser(initialUserProfile);
+    deleteCookie("userId");
+    deleteCookie("accessTokenUser");
+  };
+
   return (
     <Layout>
       <Header className={style.header}>
@@ -51,13 +73,59 @@ const MainLayout = ({ children }: { children: any }) => {
             }
           />
         </div>
-        <Menu
-          className={style.menuBar}
-          theme="light"
-          mode="horizontal"
-          defaultSelectedKeys={menuOnActive()}
-          items={items}
-        />
+        <div className={style.menuWrapper}>
+          <Menu
+            className={style.menuBar}
+            theme="light"
+            mode="horizontal"
+            defaultSelectedKeys={menuOnActive()}
+            items={items}
+          />
+          <div className={style.profile}>
+            {profileUser.id ? (
+              <Dropdown
+                menu={{
+                  items: [
+                    {
+                      key: "1",
+                      label: <p>{profileUser.full_name}</p>,
+                    },
+
+                    {
+                      key: "3",
+                      icon: <LogoutOutlined />,
+                      style: {
+                        color: "red",
+                      },
+                      label: (
+                        <div onClick={() => handleLogout()}>
+                          Đăng xuất
+                        </div>
+                      ),
+                    },
+                  ],
+                }}
+              >
+                <Avatar
+                  size={32}
+                  icon={<UserOutlined />}
+                  style={{
+                    cursor: "pointer",
+                  }}
+                ></Avatar>
+              </Dropdown>
+            ) : (
+              <Button
+                onClick={() => setIsOpenLogin(true)}
+                className={style.loginBtn}
+                type="text"
+                icon={<LoginOutlined />}
+              >
+                Đăng nhập
+              </Button>
+            )}
+          </div>
+        </div>
       </Header>
       <Content
         // style={{ padding: "0 50px" }}
@@ -68,6 +136,10 @@ const MainLayout = ({ children }: { children: any }) => {
       <Footer className={style.footer}>
         © Bản quyền thuộc về <a href="/">Rentaly</a> 2023.
       </Footer>
+      <LoginModal
+        isOpen={isOpenLogin}
+        setIsOpen={setIsOpenLogin}
+      />
     </Layout>
   );
 };

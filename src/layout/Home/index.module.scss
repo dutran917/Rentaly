@@ -12,7 +12,7 @@
     height: 200px;
     font-size: 20px;
     font-weight: bold;
-    color: var(--base=color);
+    color: var(--base-color);
     background: white;
     padding: 50px 10px;
   }
@@ -50,13 +50,13 @@
   .borderIcon {
     width: 20px;
     height: 20px;
-    border: 3px solid var(--base=color);
+    border: 3px solid var(--base-color);
     display: inline-block;
     position: relative;
     .titleIcon {
       width: 6px;
       height: 6px;
-      background-color: var(--base=color);
+      background-color: var(--base-color);
       display: inline-block;
       position: absolute;
       left: 4px;
@@ -69,7 +69,7 @@
       height: 2px;
       position: absolute;
       top: 6px;
-      background-color: var(--base=color);
+      background-color: var(--base-color);
       content: "";
     }
     &::after {
@@ -79,7 +79,7 @@
       height: 2px;
       position: absolute;
       top: 6px;
-      background-color: var(--base=color);
+      background-color: var(--base-color);
       content: "";
     }
   }

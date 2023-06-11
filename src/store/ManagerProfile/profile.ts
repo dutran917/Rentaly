@@ -13,9 +13,23 @@ export const initialManagerProfile: IProfile = {
   phone: "",
 };
 
+export const initialUserProfile: IProfile = {
+  id: 0,
+  full_name: "",
+  email: "",
+  phone: "",
+};
+
 export const managerProfileAtom = atom({
   key: `MANAGER_PROFILE`,
   default: {
     ...initialManagerProfile,
+  },
+});
+
+export const userProfileAtam = atom({
+  key: `USER_PROFILE`,
+  default: {
+    ...initialUserProfile,
   },
 });

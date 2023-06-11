@@ -12,6 +12,8 @@ export const API_PATH = {
   APARTMENT_DETAIL: (id: number) => `/post/apartment/${id}`,
   ROOM_LIST: (id: number) => `/post/room-list/${id}`,
   //user
+  REGISTER_USER: "/auth/register-user",
+  LOGIN_USER: "/auth/login",
   GET_LIST_RENTAL: "/rental/list-apartment",
   GET_DETAIL_APARTMENT: (id: number) =>
     `/rental/detail-apartment/${id}`,

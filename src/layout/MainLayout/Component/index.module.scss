@@ -1,0 +1,35 @@
+.formLogin {
+  max-height: 400px;
+  overflow: auto;
+  .formLoginItem {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-size: 15px;
+  }
+  .formLoginBtn {
+    background-color: var(--base-color);
+    color: white;
+    padding: 14px 16px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 15px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 30%;
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+  .registerBtn {
+    cursor: pointer;
+    margin: 0 5px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--primary-color);
+    text-decoration: underline;
+  }
+}

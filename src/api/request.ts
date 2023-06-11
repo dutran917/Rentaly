@@ -22,3 +22,19 @@ export const privateRequest = async (
     },
   });
 };
+
+export const privateRequestUser = async (
+  method: string,
+  url: string,
+  payload?: any
+) => {
+  const tokenUser = await getCookie("accessTokenUser");
+  return instanceRequest({
+    method: method,
+    url: url,
+    data: payload,
+    headers: {
+      Authorization: `Bearer ${tokenUser}`,
+    },
+  });
+};
