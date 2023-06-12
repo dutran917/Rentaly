@@ -61,7 +61,7 @@ a {
   border: 1px solid rgba(0, 0, 0, 0.6) !important;
 }
 .ant-carousel .slick-dots {
-  margin-left: 0;
+  margin-left: 0 !important;
 }
 #components-layout-demo-custom-trigger .trigger {
   padding: 0 24px;
