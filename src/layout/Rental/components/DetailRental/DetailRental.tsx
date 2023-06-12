@@ -131,6 +131,7 @@ const DetailRental = () => {
       <div className={styles.carousel} id="carousel">
         <Carousel
           dots={false}
+          // @ts-ignore
           ref={carouselRef}
           style={{
             // textAlign: "center",
@@ -147,6 +148,7 @@ const DetailRental = () => {
         </Carousel>
         <div
           className={styles.carouselIconPrev}
+          // @ts-ignore
           onClick={() => carouselRef.current?.prev()}
         >
           <LeftOutlined
@@ -159,6 +161,7 @@ const DetailRental = () => {
         </div>
         <div
           className={styles.carouselIconNext}
+          // @ts-ignore
           onClick={() => carouselRef.current?.next()}
         >
           <RightOutlined
