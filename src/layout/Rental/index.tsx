@@ -234,6 +234,7 @@ const RentMainPage = () => {
               // className={styles.carousel}
 
               dots={false}
+              // @ts-ignore
               ref={carouselRef}
               style={{
                 // textAlign: "center",
@@ -282,6 +283,7 @@ const RentMainPage = () => {
               className={styles.carouselIconPrev}
               type="text"
               icon={<LeftOutlined />}
+              // @ts-ignore
               onClick={() => carouselRef.current?.prev()}
             ></Button>
             <Button
@@ -292,6 +294,7 @@ const RentMainPage = () => {
               type="text"
               className={styles.carouselIconNext}
               icon={<RightOutlined />}
+              // @ts-ignore
               onClick={() => carouselRef.current?.next()}
             ></Button>
           </div>
