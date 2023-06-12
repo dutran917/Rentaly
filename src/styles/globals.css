@@ -43,11 +43,11 @@ a {
   text-decoration: none;
 }
 .ant-menu-horizontal > .ant-menu-item-selected a {
-  color: #feb800;
+  color: #feb800 !important;
 }
 .ant-menu-horizontal:not(.ant-menu-dark)
   > .ant-menu-item-selected::after {
-  border-bottom: none;
+  border-bottom: none !important;
 }
 .ant-menu-horizontal > .ant-menu-item a:hover {
   color: #feb800 !important;
@@ -66,28 +66,28 @@ a {
   margin-left: 0 !important;
 }
 #components-layout-demo-custom-trigger .trigger {
-  padding: 0 24px;
-  font-size: 18px;
-  line-height: 64px;
-  cursor: pointer;
-  transition: color 0.3s;
+  padding: 0 24px !important;
+  font-size: 18px !important;
+  line-height: 64px !important;
+  cursor: pointer !important;
+  transition: color 0.3s !important;
 }
 
 #components-layout-demo-custom-trigger .trigger:hover {
-  color: #1890ff;
+  color: #1890ff !important;
 }
 
 #components-layout-demo-custom-trigger .logo {
-  height: 32px;
-  margin: 16px;
-  background: rgba(255, 255, 255, 0.3);
+  height: 32px !important;
+  margin: 16px !important;
+  background: rgba(255, 255, 255, 0.3) !important;
 }
 
 .site-layout .site-layout-background {
-  background: #fff;
+  background: #fff !important;
 }
 .ant-layout-sider {
-  background: white;
+  background: white !important;
   /* min-width: 200px !important; */
   min-width: 235px !important;
 }
@@ -96,7 +96,7 @@ a {
   min-width: 80px !important;
 }
 .ck-editor__editable {
-  min-height: 200px;
+  min-height: 200px !important;
 }
 .ant-upload-list-picture-card
   .ant-upload-list-item-info::before {
@@ -122,9 +122,9 @@ a {
 
 @media (max-width: 900px) {
   .ant-form-inline {
-    flex-wrap: nowrap;
-    padding: 0 50px;
-    overflow: auto;
+    flex-wrap: nowrap !important;
+    padding: 0 50px !important;
+    overflow: auto !important;
   }
 }
 /* 
