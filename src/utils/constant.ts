@@ -1,7 +1,7 @@
 export const API_PATH = {
   //manager
   MANAGER_SIGNUP: "/auth/register-user",
-  MANAGER_LOGIN: "/auth/login",
+  MANAGER_LOGIN: "/auth/lessor-login",
   MANAGER_INFO: "/user/info-user",
   CREATE_APARTMENT: "/post/apartment",
   EDIT_APARTMENT: "/post/edit-apartment",
@@ -13,7 +13,7 @@ export const API_PATH = {
   ROOM_LIST: (id: number) => `/post/room-list/${id}`,
   //user
   REGISTER_USER: "/auth/register-user",
-  LOGIN_USER: "/auth/login",
+  LOGIN_USER: "/auth/user-login",
   GET_LIST_RENTAL: "/rental/list-apartment",
   GET_DETAIL_APARTMENT: (id: number) =>
     `/rental/detail-apartment/${id}`,

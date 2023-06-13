@@ -30,9 +30,18 @@ const ManagerLogin = () => {
       });
     },
     onError: (e) => {
-      notification.error({
-        message: "Sai tên đăng nhập hoặc mật khẩu",
-      });
+      //@ts-ignore
+      if (e?.response?.status === 401) {
+        notification.error({
+          message: "Sai tên đăng nhập hoặc mật khẩu",
+        });
+      }
+      //@ts-ignore
+      if (e?.response?.status === 400) {
+        notification.error({
+          message: "Tài khoản của bạn chưa được kích hoạt",
+        });
+      }
     },
   });
 
