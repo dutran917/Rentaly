@@ -84,7 +84,10 @@ const UploadImage = ({ images }: { images: any[] }) => {
             width: "200px",
           }}
           accept=".png,.jpg,.jpeg"
-          action="http://localhost:4000/upload/multi"
+          action={
+            process.env.NEXT_PUBLIC_API_URL +
+            "/upload/multi"
+          }
           onPreview={onPreview}
           fileList={fileList}
           listType="picture-card"

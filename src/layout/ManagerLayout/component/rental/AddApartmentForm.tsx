@@ -55,7 +55,7 @@ const ApartmentForm = () => {
     setEditorLoaded(true);
   }, []);
   const onFinish = (value: any) => {
-    // console.log(value);
+    console.log(value);
     const payload = {
       ...value,
       image: value?.image?.fileList?.map(
