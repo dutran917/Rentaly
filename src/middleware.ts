@@ -31,6 +31,7 @@ export const config = {
     "/manager/service-management",
     "/manager/booking-management",
     "/manager/rental-management",
+    "/manager/add-apartment",
     "/manager/dashboard",
   ],
 };

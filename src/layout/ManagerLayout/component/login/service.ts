@@ -8,6 +8,6 @@ export const loginManager = async (data: {
   try {
     return await request.post(API_PATH.MANAGER_LOGIN, data);
   } catch (error) {
-    console.log(error);
+    return Promise.reject(error);
   }
 };
