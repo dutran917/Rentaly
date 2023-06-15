@@ -38,3 +38,19 @@ export const privateRequestUser = async (
     },
   });
 };
+
+export const privateRequestAdmin = async (
+  method: string,
+  url: string,
+  payload?: any
+) => {
+  const tokenAdmin = await getCookie("accessTokenAdmin");
+  return instanceRequest({
+    method: method,
+    url: url,
+    data: payload,
+    headers: {
+      Authorization: `Bearer ${tokenAdmin}`,
+    },
+  });
+};

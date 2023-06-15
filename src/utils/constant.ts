@@ -19,4 +19,10 @@ export const API_PATH = {
     `/rental/detail-apartment/${id}`,
   GET_LIST_ROOM: "/rental/list-room",
   GET_ROOM_DETAIL: (id: number) => `/rental/room/${id}`,
+
+  //admin
+  ADMIN_LOGIN: "/auth/admin-login",
+  ADMIN_INFO: "/admin/info-admin",
+  ADMIN_GET_LIST_LESSOR: "/admin/register-lessor",
+  ADMIN_VERIFY_LESSOR: "/admin/approve-lessor",
 };

@@ -5,11 +5,14 @@ import { useRecoilState } from "recoil";
 import {
   managerProfileAtom,
   initialManagerProfile,
-  userProfileAtam,
+  userProfileAtom,
   initialUserProfile,
+  adminProfileAtom,
+  initialAdminProfile,
 } from "./profile";
 import {
   privateRequest,
+  privateRequestAdmin,
   privateRequestUser,
   request,
 } from "@/api/request";
@@ -19,8 +22,10 @@ export const useProfile = () => {
     managerProfileAtom
   );
   const [profileUser, setProfileUser] =
-    useRecoilState(userProfileAtam);
-
+    useRecoilState(userProfileAtom);
+  const [profileAdmin, setProfileAdmin] = useRecoilState(
+    adminProfileAtom
+  );
   const requestGetProfile = useRequest(
     async () => {
       const profile = await privateRequest(
@@ -38,6 +43,27 @@ export const useProfile = () => {
       },
       onError: () => {
         setProfile(initialManagerProfile);
+      },
+    }
+  );
+
+  const requestGetProfileAdmin = useRequest(
+    async () => {
+      const profile = await privateRequestAdmin(
+        "GET",
+        API_PATH.ADMIN_INFO
+      );
+      return profile;
+    },
+    {
+      manual: true,
+      onSuccess: (res) => {
+        setProfileAdmin({
+          ...res.data,
+        });
+      },
+      onError: () => {
+        setProfileAdmin(initialAdminProfile);
       },
     }
   );
@@ -69,5 +95,8 @@ export const useProfile = () => {
     requestGetProfileUser,
     profileUser,
     setProfileUser,
+    profileAdmin,
+    setProfileAdmin,
+    requestGetProfileAdmin,
   };
 };

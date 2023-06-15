@@ -4,8 +4,11 @@ import { useRouter } from "next/router";
 import { getCookie } from "cookies-next";
 
 const AppLayout = ({ children }: any) => {
-  const { requestGetProfile, requestGetProfileUser } =
-    useProfile();
+  const {
+    requestGetProfile,
+    requestGetProfileUser,
+    requestGetProfileAdmin,
+  } = useProfile();
   const router = useRouter();
   const getTokenUser = () => {
     const tokenUser = getCookie("accessTokenUser");
@@ -18,6 +21,13 @@ const AppLayout = ({ children }: any) => {
     ) {
       requestGetProfile.run();
     }
+    if (
+      router.pathname.includes("admin") &&
+      !router.pathname.includes("login")
+    ) {
+      requestGetProfileAdmin.run();
+    }
+
     const token = getTokenUser();
     if (token) {
       requestGetProfileUser.run();
