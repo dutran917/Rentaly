@@ -1,11 +1,11 @@
 import AdminLayout from "@/layout/AdminLayout/AdminLayout";
-import ApartmentManage from "@/layout/AdminLayout/component/apartment";
+import DetailApartment from "@/layout/AdminLayout/component/apartment/DetailApartment";
 import React from "react";
 
 const ApartmentManagePage = () => {
   return (
     <AdminLayout>
-      <ApartmentManage />
+      <DetailApartment />
     </AdminLayout>
   );
 };

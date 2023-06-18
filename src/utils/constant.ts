@@ -25,4 +25,11 @@ export const API_PATH = {
   ADMIN_INFO: "/admin/info-admin",
   ADMIN_GET_LIST_LESSOR: "/admin/register-lessor",
   ADMIN_VERIFY_LESSOR: "/admin/approve-lessor",
+  ADMIN_GET_LIST_APARTMNET: "/admin/list-apartment",
+  ADMIN_APPROVE_APARTMENT: "/admin/approve-apartment",
+  ADMIN_GET_DETAIL_APARTMENT: (id: number) =>
+    `/admin/detail-apartment/${id}`,
+  ADMIN_EDIT_APARTMENT: "/admin/edit-apartment",
+  ADMIN_GET_ROOM_LIST: (id: number) =>
+    `/admin/room-list/${id}`,
 };

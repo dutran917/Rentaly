@@ -10,7 +10,7 @@ import {
 } from "antd";
 import Modal from "antd/lib/modal/Modal";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   LeftOutlined,
   EditOutlined,
@@ -23,6 +23,7 @@ import {
   getListApartmentTags,
 } from "./service";
 import UploadImage from "@/components/UploadImage";
+import NextMap from "@/components/Map";
 const EditApartmentForm = ({
   infoApartment,
   refresh,
@@ -35,6 +36,7 @@ const EditApartmentForm = ({
   const [disabled, setDisabled] = useState(true);
   const tags = useRequest(getListApartmentTags);
   const [form] = Form.useForm();
+
   const onEditApartment = useRequest(editApartment, {
     manual: true,
     onSuccess: (res) => {
@@ -124,6 +126,12 @@ const EditApartmentForm = ({
               editorLoaded={editorLoaded}
             />
           </Form.Item>
+          <NextMap
+            lat={infoApartment?.lat}
+            long={infoApartment?.long}
+            name={infoApartment?.address}
+          />
+
           <Row>
             <Col span={12}>
               <Form.Item

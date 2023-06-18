@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from "react";
-
 function Editor({ onChange, editorLoaded, name, data, disabled }) {
   const editorRef = useRef();
   const { CKEditor, ClassicEditor } = editorRef.current || {};
@@ -9,12 +8,14 @@ function Editor({ onChange, editorLoaded, name, data, disabled }) {
       CKEditor: require("@ckeditor/ckeditor5-react").CKEditor, // v3+
       ClassicEditor: require("@ckeditor/ckeditor5-build-classic")
     };
+
   }, []);
 
   return (
     <div>
       {editorLoaded && editorRef.current?.CKEditor ? (
         <CKEditor
+
           disabled={disabled}
           type=""
           data={data}

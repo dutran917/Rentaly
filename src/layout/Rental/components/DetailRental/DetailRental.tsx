@@ -30,6 +30,7 @@ import {
 } from "antd";
 import Link from "next/link";
 import { formatNumber } from "@/utils/helper";
+import NextMap from "@/components/Map";
 const DetailRental = () => {
   const router = useRouter();
   const { id } = router.query;
@@ -464,6 +465,16 @@ const DetailRental = () => {
                     </div>
                   </div>
                 </Row>
+                <div className={styles.addressApartment}>
+                  <div className={styles.subtitle}>
+                    <p>✺ Địa chỉ tòa nhà</p>
+                  </div>
+                  <NextMap
+                    lat={detail?.lat}
+                    long={detail?.long}
+                    name={detail?.address}
+                  />
+                </div>
               </div>
             </div>
           </div>

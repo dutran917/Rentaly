@@ -14,15 +14,19 @@ interface CreateApartmentInput {
   tags: number[];
 }
 
-interface EditApartmentInput {
+export interface EditApartmentInput {
   title: string;
   subtitle: string;
   content: string;
   image: string[];
   tags: number[];
+  lat: number;
+  long: number;
+  district: string;
+  address: string;
 }
 
-interface CreateRoomInput {
+export interface CreateRoomInput {
   title: string;
   price: number;
   maximum: number;
