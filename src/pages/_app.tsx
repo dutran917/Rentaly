@@ -4,14 +4,16 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "../styles/globals.css";
 import AppLayout from "@/layout/AppLayout";
+import viVN from "antd/lib/locale/vi_VN";
 import { RecoilRoot } from "recoil";
 import Head from "next/head";
+import { ConfigProvider } from "antd";
 export default function App({
   Component,
   pageProps,
 }: AppProps) {
   return (
-    <>
+    <ConfigProvider locale={viVN}>
       <Head>
         <meta name="robots" content="index, follow" />
         <meta charSet="utf-8" />
@@ -40,6 +42,6 @@ export default function App({
           <Component {...pageProps} />
         </AppLayout>
       </RecoilRoot>
-    </>
+    </ConfigProvider>
   );
 }

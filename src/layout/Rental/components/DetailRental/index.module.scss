@@ -369,3 +369,38 @@ $breakpoints: (
     }
   }
 }
+.apointmentName {
+  font-size: 22px;
+  font-weight: 900;
+}
+.apointmentInfo {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  margin: 5px 0;
+  align-items: center;
+  background: #f6f6f6;
+  p {
+    margin: 0;
+  }
+  span {
+    font-weight: 600;
+  }
+}
+.roomBookingBtn1 {
+  margin: 20px 0;
+  width: 100%;
+  color: #fff;
+  font-weight: 600;
+  text-align: center;
+  background-image: linear-gradient(
+    90deg,
+    #f65e38 0,
+    #f68a39 51%,
+    #f65e38
+  );
+  background-size: 200% auto;
+  padding: 10px 30px;
+  cursor: pointer;
+  border-radius: 10px;
+}

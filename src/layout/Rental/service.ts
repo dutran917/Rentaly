@@ -16,6 +16,20 @@ interface GetListRoom {
   living_room: number;
 }
 
+interface CreateApointmentInput {
+  roomId: number;
+
+  fullName: string;
+
+  phone: string;
+
+  date: string;
+
+  note: string;
+
+  apartmentId: number;
+}
+
 export const getListRental = (
   query: GetListRentalInput
 ) => {
@@ -51,4 +65,10 @@ export const getListRoom = (query: GetListRoom) => {
 
 export const getRoom = (roomId: number) => {
   return request.get(API_PATH.GET_ROOM_DETAIL(roomId));
+};
+
+export const createApointmentService = (
+  data: CreateApointmentInput
+) => {
+  return request.post(API_PATH.CREATE_APOINTMENT, data);
 };

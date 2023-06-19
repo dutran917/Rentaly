@@ -12,7 +12,6 @@ import {
   getListRoom,
   getRoom,
 } from "../../service";
-// import renderHTML from 'react-render-html';
 import {
   LeftOutlined,
   RightOutlined,
@@ -20,21 +19,24 @@ import {
 import {
   Breadcrumb,
   Button,
-  Card,
   Carousel,
   Col,
   DatePicker,
   Row,
-  Space,
   Spin,
 } from "antd";
+
 import Link from "next/link";
 import { formatNumber } from "@/utils/helper";
 import NextMap from "@/components/Map";
+import ApointmentModal from "./ApointmentModal";
 const DetailRental = () => {
   const router = useRouter();
   const { id } = router.query;
   const [listRoom, setListRoom] = useState([]);
+  const [selectedTime, setSelectedTime] = useState<
+    any | null
+  >(null);
   const [selectedFilter, setSelectedFilter] =
     useState(null);
   const [selectedRoom, setSelectedRoom] = useState<any>();
@@ -109,6 +111,8 @@ const DetailRental = () => {
   };
   const [scrollPosition, setScrollPosition] = useState(0);
   const [scroll, setScroll] = useState(false);
+  const [isOpenApointmnetModal, setIsOpenApointmnetModal] =
+    useState(false);
   useEffect(() => {
     window.addEventListener("scroll", () => {
       setScroll(window.scrollY > 700);
@@ -495,8 +499,16 @@ const DetailRental = () => {
                 <DatePicker
                   placeholder="Chọn ngày xem phòng"
                   className={styles.roomBookingDate}
+                  format={"HH:mm DD/MM/YYYY"}
+                  showTime
+                  onChange={(val) => setSelectedTime(val)}
                 />
-                <div className={styles.roomBookingBtn1}>
+                <div
+                  className={styles.roomBookingBtn1}
+                  onClick={() =>
+                    setIsOpenApointmnetModal(true)
+                  }
+                >
                   Đặt lịch xem phòng
                 </div>
                 <div className={styles.roomBookingBtn2}>
@@ -507,6 +519,14 @@ const DetailRental = () => {
           </div>
         </div>
       </div>
+      <ApointmentModal
+        isOpen={isOpenApointmnetModal}
+        apartmentId={Number(id)}
+        seletedTime={selectedTime}
+        setIsOpen={setIsOpenApointmnetModal}
+        selectedRoom={selectedRoom}
+        apartmentName={detail?.title}
+      />
     </div>
   );
 };

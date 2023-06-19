@@ -153,3 +153,6 @@ a {
   width: 100%;
   height: 400px;
 }
+.ant-input[disabled] {
+  color: black !important;
+}

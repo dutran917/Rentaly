@@ -49,7 +49,7 @@ const LoginModal = ({
       setCookie("userId", res?.data?.id);
       setCookie("accessTokenUser", res?.data?.accessToken);
       setProfileUser(res?.data);
-      setIsOpen(false);
+      onClose();
     },
     onError: () => {
       message.error(
@@ -57,6 +57,10 @@ const LoginModal = ({
       );
     },
   });
+  const onClose = () => {
+    setIsOpen(false);
+    form.resetFields();
+  };
   const onSumit = (val: any) => {
     console.log(val);
     if (mode === "register") {
@@ -66,6 +70,7 @@ const LoginModal = ({
       loginUser.run(val);
     }
   };
+  const [form] = Form.useForm();
   return (
     <Modal
       title={
@@ -74,11 +79,12 @@ const LoginModal = ({
           : "Đăng ký tài khoản"
       }
       open={isOpen}
-      onCancel={() => setIsOpen(false)}
+      onCancel={onClose}
       footer={null}
     >
       {mode === "login" && (
         <Form
+          form={form}
           onFinish={onSumit}
           layout="vertical"
           className={styles.formLogin}
