@@ -6,6 +6,7 @@ import {
   Input,
   Row,
   Select,
+  Tag,
   message,
 } from "antd";
 import Modal from "antd/lib/modal/Modal";
@@ -85,6 +86,24 @@ const EditApartmentForm = ({
         ></Button>
       </div>
       <div className={styles.formData}>
+        <div>
+          <span>Trạng thái: </span>
+          <Tag
+            color={
+              infoApartment?.verified === "PENDING"
+                ? "warning"
+                : infoApartment?.verified === "ACCEPT"
+                ? "green"
+                : "red"
+            }
+          >
+            {infoApartment?.verified === "PENDING"
+              ? "Đang chờ duyệt"
+              : infoApartment?.verified === "ACCEPT"
+              ? "Đã duyệt"
+              : "Từ chối duyệt"}
+          </Tag>
+        </div>
         <Form
           disabled={disabled}
           layout="vertical"

@@ -58,6 +58,7 @@ const LoginModal = ({
     },
   });
   const onClose = () => {
+    setMode("login");
     setIsOpen(false);
     form.resetFields();
   };
@@ -101,7 +102,7 @@ const LoginModal = ({
           >
             <Input
               status="warning"
-              placeholder="Nhập email của bạn"
+              placeholder="Nhập email hoặc số điện thoại"
               className={styles.formLoginItem}
               prefix={<UserOutlined />}
             />

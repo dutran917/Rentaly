@@ -8,6 +8,8 @@ interface GetListRentalInput {
   district: string;
   price: string[];
   type: string[];
+  lat?: number;
+  long?: number;
 }
 
 interface GetListRoom {
@@ -48,6 +50,9 @@ export const getListRental = (
   if (query.district) {
     q += `&district=${query.district}`;
   }
+  if (!!query.lat && !!query.long) {
+    q += `&lat=${query.lat}&long=${query.long}`;
+  }
   return privateRequest(
     "GET",
     API_PATH.GET_LIST_RENTAL + "?" + q
@@ -71,4 +76,8 @@ export const createApointmentService = (
   data: CreateApointmentInput
 ) => {
   return request.post(API_PATH.CREATE_APOINTMENT, data);
+};
+
+export const getListUniversity = () => {
+  return request.get(API_PATH.LIST_UNIVERSITY);
 };

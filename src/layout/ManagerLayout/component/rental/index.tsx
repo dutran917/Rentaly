@@ -1,11 +1,19 @@
 import { useAntdTable, useRequest } from "ahooks";
-import { Button, Form, Input, Row, Table } from "antd";
+import {
+  Breadcrumb,
+  Button,
+  Form,
+  Input,
+  Row,
+  Table,
+  Tag,
+} from "antd";
 import { ColumnsType } from "antd/lib/table";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { EyeOutlined } from "@ant-design/icons";
 import { getListApartment } from "./service";
-
+import styles from "./index.module.scss";
 const RentalManage = () => {
   const router = useRouter();
   const [form] = Form.useForm();
@@ -53,6 +61,18 @@ const RentalManage = () => {
       title: "Số phòng chưa thuê",
     },
     {
+      title: "Trạng thái",
+      dataIndex: "verified",
+      render(value, record, index) {
+        if (value === "PENDING")
+          return <Tag color="warning">Chờ duyệt</Tag>;
+        if (value === "ACCEPT")
+          return <Tag color="green">Đã duyệt</Tag>;
+        if (value === "REFUSE")
+          return <Tag color="red">Từ chối</Tag>;
+      },
+    },
+    {
       title: "Hành động",
       align: "center",
       render: (_, record) => (
@@ -73,6 +93,9 @@ const RentalManage = () => {
   ];
   return (
     <div>
+      <Breadcrumb className={styles.breadcrumb}>
+        <Breadcrumb.Item>Quản lý chung cư</Breadcrumb.Item>
+      </Breadcrumb>
       {searchForm}
       <Table
         columns={columns}

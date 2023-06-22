@@ -30,6 +30,7 @@ import Link from "next/link";
 import { formatNumber } from "@/utils/helper";
 import NextMap from "@/components/Map";
 import ApointmentModal from "./ApointmentModal";
+import moment from "moment";
 const DetailRental = () => {
   const router = useRouter();
   const { id } = router.query;
@@ -497,6 +498,9 @@ const DetailRental = () => {
               </div>
               <div className={styles.roomBooking}>
                 <DatePicker
+                  disabledDate={(date) =>
+                    date < moment(new Date()).add(1, "d")
+                  }
                   placeholder="Chọn ngày xem phòng"
                   className={styles.roomBookingDate}
                   format={"HH:mm DD/MM/YYYY"}

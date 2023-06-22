@@ -14,6 +14,7 @@ import { formatNumber } from "@/utils/helper";
 import { useRequest } from "ahooks";
 import { createApointmentService } from "../../service";
 import moment from "moment";
+import { useProfile } from "@/store/ManagerProfile/useProfile";
 const ApointmentModal = ({
   isOpen,
   setIsOpen,
@@ -33,9 +34,10 @@ const ApointmentModal = ({
     setIsOpen(false);
     form.resetFields();
   };
+  const { profileUser } = useProfile();
+
   const [form] = Form.useForm();
   const onFinish = (val: any) => {
-    console.log(val);
     const payload = {
       ...val,
       date: moment(val?.date).toISOString(),
@@ -50,13 +52,18 @@ const ApointmentModal = ({
     {
       manual: true,
       onSuccess: (res) => {
-        console.log(res);
         notification.success({
-          message: "Thành công",
+          message: "Đặt lịch xem phòng hành công",
+          description:
+            "Hãy chờ chủ phòng liên lạc với bạn!",
         });
+        form.resetFields();
+        onClose();
       },
       onError(e) {
-        console.log(e);
+        notification.error({
+          message: "Có lỗi xảy ra",
+        });
       },
     }
   );
@@ -66,6 +73,12 @@ const ApointmentModal = ({
       room: selectedRoom?.title,
       date: seletedTime,
     });
+    if (profileUser.email) {
+      form.setFieldsValue({
+        fullName: profileUser.full_name,
+        phone: profileUser.phone,
+      });
+    }
   });
   return (
     <Modal
@@ -111,6 +124,9 @@ const ApointmentModal = ({
           <Col span={11}>
             <Form.Item label="Ngày xem phòng" name="date">
               <DatePicker
+                disabledDate={(date) =>
+                  date < moment(new Date()).add(1, "d")
+                }
                 showTime
                 status="warning"
                 format={"HH:mm DD/MM/YYYY"}
@@ -120,12 +136,30 @@ const ApointmentModal = ({
         </Row>
         <Row justify="space-between">
           <Col span={11}>
-            <Form.Item label="Họ và tên" name="fullName">
+            <Form.Item
+              label="Họ và tên"
+              name="fullName"
+              rules={[
+                {
+                  required: true,
+                  message: "Vui lòng nhập",
+                },
+              ]}
+            >
               <Input status="warning" />
             </Form.Item>
           </Col>
           <Col span={11}>
-            <Form.Item label="Số điện thoại" name="phone">
+            <Form.Item
+              label="Số điện thoại"
+              name="phone"
+              rules={[
+                {
+                  required: true,
+                  message: "Vui lòng nhập",
+                },
+              ]}
+            >
               <Input status="warning" />
             </Form.Item>
           </Col>

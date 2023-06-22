@@ -4,6 +4,7 @@ import {
   Breadcrumb,
   Button,
   Carousel,
+  Divider,
   Form,
   Input,
   Pagination,
@@ -16,9 +17,19 @@ import {
 } from "@ant-design/icons";
 import ListItem from "./components/ListItem";
 import { useRequest } from "ahooks";
-import { getListRental } from "./service";
+import {
+  getListRental,
+  getListUniversity,
+} from "./service";
 import { useRef } from "react";
+import { district } from "@/utils/constant";
+import Link from "next/link";
+import { useRouter } from "next/router";
+
 const RentMainPage = () => {
+  const carouselRef = useRef();
+  const history = useRouter();
+
   const [filter, setFilter] = useState<{
     page_size: number;
     page_index: number;
@@ -26,6 +37,8 @@ const RentMainPage = () => {
     district: string;
     price: string[];
     type: string[];
+    lat?: number;
+    long?: number;
   }>({
     page_index: 1,
     page_size: 15,
@@ -35,77 +48,7 @@ const RentMainPage = () => {
     type: [],
   });
 
-  const options = [
-    {
-      label: "Đống đa",
-      value: "Đống Đa",
-    },
-    {
-      label: "Hai bà trưng",
-      value: "Hai bà trưng",
-    },
-    {
-      label: "Cầu giấy",
-      value: "Cầu giấy",
-    },
-    {
-      label: "Mỹ đình",
-      value: "Mỹ đình",
-    },
-  ];
-
-  const mockUniversity = [
-    {
-      id: 1,
-      name: "Đại học bách khoa",
-      total: 5,
-    },
-    {
-      id: 2,
-      name: "Đại học ádasd",
-      total: 5,
-    },
-    {
-      id: 3,
-      name: "Đại học ádasd khoa",
-      total: 5,
-    },
-    {
-      id: 4,
-      name: "Đại học bách zxczxczxczx",
-      total: 11,
-    },
-    {
-      id: 5,
-      name: "Đại học ádsffs",
-      total: 13,
-    },
-    {
-      id: 6,
-      name: "Đại học đâsd sadasdas",
-      total: 3,
-    },
-    {
-      id: 7,
-      name: "Đại học đâsd sadasdas",
-      total: 5,
-    },
-    {
-      id: 8,
-      name: "Đại học đâsd sadasdas",
-      total: 5,
-    },
-    {
-      id: 9,
-      name: "Đại học đâsd sadasdas",
-      total: 5,
-    },
-    {
-      id: 10,
-      name: "Đại học đâsd sadasdas",
-      total: 5,
-    },
-  ];
+  const listUniversity = useRequest(getListUniversity, {});
 
   const listRental = useRequest(getListRental, {
     manual: true,
@@ -115,9 +58,15 @@ const RentMainPage = () => {
   useEffect(() => {
     listRental.run(filter);
   }, [filter]);
-
-  const carouselRef = useRef();
-
+  useEffect(() => {
+    if (history.query?.name) {
+      setFilter((state) => ({
+        ...state,
+        lat: Number(history.query?.lat),
+        long: Number(history.query?.long),
+      }));
+    }
+  }, [history]);
   return (
     <div>
       <div className={styles.filterSection}>
@@ -130,6 +79,11 @@ const RentMainPage = () => {
               <Breadcrumb.Item>
                 <a href="rental">Thuê phòng và CCMN</a>
               </Breadcrumb.Item>
+              {history.query?.name && (
+                <Breadcrumb.Item>
+                  <p>{history.query?.name}</p>
+                </Breadcrumb.Item>
+              )}
             </Breadcrumb>
             <Form layout="inline" className="formFilter">
               <Form.Item>
@@ -147,19 +101,21 @@ const RentMainPage = () => {
                   }
                 />
               </Form.Item>
-              <Form.Item name="district">
-                <Select
-                  allowClear
-                  options={options}
-                  placeholder="Khu vực"
-                  onChange={(val) => {
-                    setFilter((state) => ({
-                      ...state,
-                      district: val,
-                    }));
-                  }}
-                />
-              </Form.Item>
+              {!history.query?.name && (
+                <Form.Item name="district">
+                  <Select
+                    allowClear
+                    options={district}
+                    placeholder="Khu vực"
+                    onChange={(val) => {
+                      setFilter((state) => ({
+                        ...state,
+                        district: val,
+                      }));
+                    }}
+                  />
+                </Form.Item>
+              )}
               <Form.Item name="type">
                 <Select
                   allowClear
@@ -193,8 +149,6 @@ const RentMainPage = () => {
               <Form.Item name="price">
                 <Select
                   onChange={(val) => {
-                    console.log(val);
-
                     setFilter((state) => ({
                       ...state,
                       price: val?.split("-"),
@@ -226,80 +180,116 @@ const RentMainPage = () => {
           </div>
         </div>
       </div>
-      <div className={styles.slideSection}>
+      {history.query?.name ? (
         <div className={styles.container}>
-          <div className={styles.carousel}>
-            <Carousel
-              // dotPosition="bottom"
-              // className={styles.carousel}
-
-              dots={false}
-              // @ts-ignore
-              ref={carouselRef}
+          <div className={styles.titleFilterByUni}>
+            <h1>
+              CHO THUÊ PHÒNG TRỌ, CCMN GẦN{" "}
+              {history.query?.name}
+            </h1>
+            <Divider
               style={{
-                // textAlign: "center",
-                padding: "10px 0",
+                margin: 0,
               }}
-              slidesToShow={4}
-              slidesToScroll={4}
-              responsive={[
-                {
-                  breakpoint: 900,
-                  settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 1,
-                    centerMode: false,
-                  },
-                },
-                {
-                  breakpoint: 600,
-                  settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1,
-                    centerMode: false,
-                  },
-                },
-              ]}
-
-              // cssEase=""
-            >
-              {mockUniversity.map((item) => (
-                <div
-                  key={item.id}
-                  className={styles.slideItem}
-                >
-                  <div>
-                    <b>{item.name}</b>
-                    <p>{`Có ${item.total} căn hộ cho thuê`}</p>
-                  </div>
-                </div>
-              ))}
-            </Carousel>
-            <Button
-              style={{
-                background: "rgba(0, 0, 0, 0.3)",
-                borderRadius: "50%",
-              }}
-              className={styles.carouselIconPrev}
-              type="text"
-              icon={<LeftOutlined />}
-              // @ts-ignore
-              onClick={() => carouselRef.current?.prev()}
-            ></Button>
-            <Button
-              style={{
-                background: "rgba(0, 0, 0, 0.3)",
-                borderRadius: "50%",
-              }}
-              type="text"
-              className={styles.carouselIconNext}
-              icon={<RightOutlined />}
-              // @ts-ignore
-              onClick={() => carouselRef.current?.next()}
-            ></Button>
+            />
+            <p>
+              Cho thuê phòng trọ giá rẻ, chung cư mini full
+              đồ sinh viên gần {history.query?.name}. Điện
+              nước giá dân (3k2/ số, 20k/ khối), không chung
+              chủ, an ninh đảm bảo camera 24h, vân tay bảo
+              mật an toàn,...
+            </p>
           </div>
         </div>
-      </div>
+      ) : (
+        <div className={styles.slideSection}>
+          <div className={styles.container}>
+            <div className={styles.carousel}>
+              <Carousel
+                // dotPosition="bottom"
+                // className={styles.carousel}
+
+                dots={false}
+                // @ts-ignore
+                ref={carouselRef}
+                style={{
+                  // textAlign: "center",
+                  padding: "10px 0",
+                }}
+                slidesToShow={4}
+                slidesToScroll={4}
+                responsive={[
+                  {
+                    breakpoint: 900,
+                    settings: {
+                      slidesToShow: 3,
+                      slidesToScroll: 1,
+                      centerMode: false,
+                    },
+                  },
+                  {
+                    breakpoint: 600,
+                    settings: {
+                      slidesToShow: 2,
+                      slidesToScroll: 1,
+                      centerMode: false,
+                    },
+                  },
+                ]}
+
+                // cssEase=""
+              >
+                {listUniversity.data?.data?.map(
+                  (item: any, index: number) => (
+                    <Link
+                      href={{
+                        pathname: "/rental",
+                        query: {
+                          name: item.name,
+                          lat: item.lat,
+                          long: item.long,
+                        },
+                      }}
+                    >
+                      <div
+                        key={index}
+                        className={styles.slideItem}
+                      >
+                        <div>
+                          <b>{item.name}</b>
+                          <p>{`Có ${item.count} căn hộ cho thuê`}</p>
+                        </div>
+                      </div>
+                    </Link>
+                  )
+                )}
+              </Carousel>
+              <Button
+                style={{
+                  background: "rgba(0, 0, 0, 0.3)",
+                  borderRadius: "50%",
+                }}
+                className={styles.carouselIconPrev}
+                type="text"
+                icon={<LeftOutlined />}
+                // @ts-ignore
+                onClick={() => carouselRef.current?.prev()}
+              ></Button>
+              <Button
+                style={{
+                  background: "rgba(0, 0, 0, 0.3)",
+                  borderRadius: "50%",
+                }}
+                type="text"
+                className={styles.carouselIconNext}
+                icon={<RightOutlined />}
+                // @ts-ignore
+                onClick={() => carouselRef.current?.next()}
+              ></Button>
+            </div>
+          </div>
+        </div>
+      )}
       <div className={styles.listItemSection}>
         <div className={styles.container}>
           <ListItem
