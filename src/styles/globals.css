@@ -156,3 +156,6 @@ a {
 .ant-input[disabled] {
   color: black !important;
 }
+.ant-picker-input > input[disabled] {
+  color: black !important;
+}

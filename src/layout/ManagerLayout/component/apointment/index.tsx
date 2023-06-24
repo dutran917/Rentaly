@@ -1,6 +1,7 @@
 import { useAntdTable, useRequest } from "ahooks";
 import React, { useState } from "react";
 import {
+  changeStatusApointment,
   getAllApartment,
   getListApointment,
 } from "./service";
@@ -11,24 +12,45 @@ import {
   Select,
   Table,
   Breadcrumb,
+  Tooltip,
+  Tag,
+  notification,
 } from "antd";
 import { ColumnsType } from "antd/lib/table";
+import {
+  CheckOutlined,
+  CloseOutlined,
+} from "@ant-design/icons";
 import styles from "./index.module.scss";
 import moment from "moment";
 const { RangePicker } = DatePicker;
 const ApointmentManage = () => {
   const [apartment, setApartment] = useState<any[]>([]);
   const [form] = Form.useForm();
-  const { tableProps, search, loading } = useAntdTable(
-    getListApointment,
-    {
+  const { tableProps, search, loading, refresh } =
+    useAntdTable(getListApointment, {
       form,
       manual: false,
-    }
-  );
+    });
 
   const { data } = useRequest(getAllApartment);
-  console.log(data);
+  const handleApointment = useRequest(
+    changeStatusApointment,
+    {
+      manual: true,
+      onSuccess() {
+        notification.success({
+          message: "Thành công",
+        });
+        refresh();
+      },
+      onError() {
+        notification.error({
+          message: "Có lỗi xảy ra",
+        });
+      },
+    }
+  );
 
   const { submit } = search;
   const searchForm = (
@@ -84,6 +106,64 @@ const ApointmentManage = () => {
     {
       title: "Chung cư",
       dataIndex: "apartment",
+    },
+    {
+      title: "Trạng thái",
+      dataIndex: "status",
+      render: (value) => (
+        <>
+          <Tag
+            color={
+              value === "PENDING"
+                ? "warning"
+                : value === "SUCCESS"
+                ? "green"
+                : "red"
+            }
+          >
+            {value === "PENDING"
+              ? "Đã đặt lịch"
+              : value === "SUCCESS"
+              ? "Đã xem"
+              : "Đã hủy"}
+          </Tag>
+        </>
+      ),
+    },
+    {
+      title: "Hành động",
+      width: "10%",
+      align: "center",
+      render: (value, record) => (
+        <>
+          {record?.status === "PENDING" && (
+            <Row justify="space-around">
+              <Tooltip title="Khách đã xem">
+                <CheckOutlined
+                  onClick={() =>
+                    handleApointment.run(true, record?.id)
+                  }
+                  style={{
+                    color: "green",
+                    cursor: "pointer",
+                  }}
+                />
+              </Tooltip>
+              <Tooltip title="Khách đã hủy">
+                <CloseOutlined
+                  onClick={() =>
+                    handleApointment.run(false, record?.id)
+                  }
+                  style={{
+                    color: "red",
+                    cursor: "pointer",
+                  }}
+                />
+              </Tooltip>
+            </Row>
+          )}
+        </>
+      ),
     },
   ];
   return (

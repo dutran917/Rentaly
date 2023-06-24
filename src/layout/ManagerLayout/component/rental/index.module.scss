@@ -36,3 +36,14 @@
     font-weight: 600;
   }
 }
+.roomModalInfo {
+  height: 500px;
+  .roomModalRenter {
+    padding: 15px;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    b {
+      margin-right: 20px;
+    }
+  }
+}

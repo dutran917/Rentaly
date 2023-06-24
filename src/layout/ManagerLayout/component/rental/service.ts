@@ -124,3 +124,10 @@ export const getListApartmentTags = () => {
 export const getListRoomTags = () => {
   return privateRequest("GET", API_PATH.ROOM_TAGS);
 };
+
+export const getInfoRoom = (roomId: number) => {
+  return privateRequest(
+    "GET",
+    API_PATH.ROOM_DETAIL(roomId)
+  );
+};

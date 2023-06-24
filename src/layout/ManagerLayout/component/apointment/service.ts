@@ -40,3 +40,17 @@ export const getListApointment = async (
 export const getAllApartment = () => {
   return privateRequest("GET", API_PATH.ALL_APARTMENT);
 };
+
+export const changeStatusApointment = (
+  status: boolean,
+  id: number
+) => {
+  return privateRequest(
+    "POST",
+    API_PATH.CHANGE_APOINTMENT,
+    {
+      status,
+      id,
+    }
+  );
+};

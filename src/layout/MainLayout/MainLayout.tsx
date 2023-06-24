@@ -17,6 +17,7 @@ import LoginModal from "./Component/LoginModal";
 import {
   UserOutlined,
   LogoutOutlined,
+  EditOutlined,
 } from "@ant-design/icons";
 import { initialUserProfile } from "@/store/ManagerProfile/profile";
 const { Header, Content, Footer } = Layout;
@@ -88,7 +89,16 @@ const MainLayout = ({ children }: { children: any }) => {
                   items: [
                     {
                       key: "1",
-                      label: <p>{profileUser.full_name}</p>,
+                      label: (
+                        <a href="/user/profile">
+                          {profileUser.full_name}
+                        </a>
+                      ),
+                      style: {
+                        padding: "10px 20px",
+                        width: "200px",
+                      },
+                      icon: <UserOutlined />,
                     },
 
                     {
@@ -96,6 +106,8 @@ const MainLayout = ({ children }: { children: any }) => {
                       icon: <LogoutOutlined />,
                       style: {
                         color: "red",
+                        padding: "10px 20px",
+                        width: "200px",
                       },
                       label: (
                         <div onClick={() => handleLogout()}>

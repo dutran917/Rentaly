@@ -20,6 +20,7 @@ import { useRequest } from "ahooks";
 import {
   getListRental,
   getListUniversity,
+  getVNPayRedirect,
 } from "./service";
 import { useRef } from "react";
 import { district } from "@/utils/constant";

@@ -11,6 +11,7 @@ import {
   getDetailApartment,
   getListRoom,
   getRoom,
+  getVNPayRedirect,
 } from "../../service";
 import {
   LeftOutlined,
@@ -27,17 +28,23 @@ import {
 } from "antd";
 
 import Link from "next/link";
-import { formatNumber } from "@/utils/helper";
+import { checkLogin, formatNumber } from "@/utils/helper";
 import NextMap from "@/components/Map";
 import ApointmentModal from "./ApointmentModal";
 import moment from "moment";
+import { useProfile } from "@/store/ManagerProfile/useProfile";
+import LoginModal from "@/layout/MainLayout/Component/LoginModal";
+import PaymentModal from "./PaymentModal";
 const DetailRental = () => {
   const router = useRouter();
   const { id } = router.query;
   const [listRoom, setListRoom] = useState([]);
+  const [isOpenLogin, setIsOpenLogin] = useState(false);
+  const [isOpenPayment, setIsOpenPayment] = useState(false);
   const [selectedTime, setSelectedTime] = useState<
     any | null
   >(null);
+  const { profileUser } = useProfile();
   const [selectedFilter, setSelectedFilter] =
     useState(null);
   const [selectedRoom, setSelectedRoom] = useState<any>();
@@ -47,6 +54,7 @@ const DetailRental = () => {
       setListRoom(res?.data?.rooms);
     },
   });
+
   const filterListRoom = useRequest(getListRoom, {
     manual: true,
     onSuccess: (res) => {
@@ -110,7 +118,7 @@ const DetailRental = () => {
     });
     return { result, type };
   };
-  const [scrollPosition, setScrollPosition] = useState(0);
+
   const [scroll, setScroll] = useState(false);
   const [isOpenApointmnetModal, setIsOpenApointmnetModal] =
     useState(false);
@@ -119,7 +127,6 @@ const DetailRental = () => {
       setScroll(window.scrollY > 700);
     });
   }, []);
-  console.log(scrollPosition);
 
   return (
     <div className={styles.wrapper}>
@@ -515,7 +522,20 @@ const DetailRental = () => {
                 >
                   Đặt lịch xem phòng
                 </div>
-                <div className={styles.roomBookingBtn2}>
+                <div
+                  className={styles.roomBookingBtn2}
+                  onClick={() => {
+                    if (profileUser.id !== 0) {
+                      // redirectVNPay.run({
+                      //   room_id: +selectedRoom?.id,
+                      //   price: +selectedRoom.price,
+                      // });
+                      setIsOpenPayment(true);
+                    } else {
+                      setIsOpenLogin(true);
+                    }
+                  }}
+                >
                   Đặt phòng {selectedRoom?.title}
                 </div>
               </div>
@@ -528,6 +548,16 @@ const DetailRental = () => {
         apartmentId={Number(id)}
         seletedTime={selectedTime}
         setIsOpen={setIsOpenApointmnetModal}
+        selectedRoom={selectedRoom}
+        apartmentName={detail?.title}
+      />
+      <LoginModal
+        isOpen={isOpenLogin}
+        setIsOpen={setIsOpenLogin}
+      />
+      <PaymentModal
+        isOpen={isOpenPayment}
+        setIsOpen={setIsOpenPayment}
         selectedRoom={selectedRoom}
         apartmentName={detail?.title}
       />

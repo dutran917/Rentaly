@@ -15,13 +15,15 @@ export const API_PATH = {
   APARTMENT_TAGS: "/post/apartment-tag",
   ROOM_TAGS: "/post/room-tag",
   APOINTMENT_LIST: "/lessor/list-apointment",
-
+  CHANGE_APOINTMENT: "/lessor/handle-apointment",
   APARTMENT_DETAIL: (id: number) => `/post/apartment/${id}`,
+  ROOM_DETAIL: (id: number) => `/post/room/${id}`,
   ROOM_LIST: (id: number) => `/post/room-list/${id}`,
 
   //user
   REGISTER_USER: "/auth/register-user",
   LOGIN_USER: "/auth/user-login",
+  USER_INFO: "/user/info-user",
   GET_LIST_RENTAL: "/rental/list-apartment",
   GET_DETAIL_APARTMENT: (id: number) =>
     `/rental/detail-apartment/${id}`,
@@ -29,6 +31,9 @@ export const API_PATH = {
   GET_ROOM_DETAIL: (id: number) => `/rental/room/${id}`,
   CREATE_APOINTMENT: "/rental/apointment",
   LIST_UNIVERSITY: "/rental/list-university",
+  VNPAY_REDIRECT: "/payment/redirect-vnpay",
+  HISTORY_RENT: "/user/history-rent",
+
   //admin
   ADMIN_LOGIN: "/auth/admin-login",
   ADMIN_INFO: "/admin/info-admin",

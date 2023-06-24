@@ -1,3 +1,4 @@
+import { getCookie } from "cookies-next";
 export function formatNumber(x: number): string {
   if (!x) return "0";
   const str = Number(x).toFixed(2).toString();
@@ -14,3 +15,9 @@ export function formatNumber(x: number): string {
     return splitNum[0];
   } else return convertNum;
 }
+
+export const checkLogin = async () => {
+  const tokenUser = await getCookie("accessTokenUser");
+  if (tokenUser) return true;
+  return false;
+};

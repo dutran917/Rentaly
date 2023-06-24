@@ -72,7 +72,7 @@ export const useProfile = () => {
     async () => {
       const profile = await privateRequestUser(
         "GET",
-        API_PATH.MANAGER_INFO
+        API_PATH.USER_INFO
       );
       return profile;
     },

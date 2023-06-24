@@ -14,6 +14,7 @@ import { useRouter } from "next/router";
 import { deleteCookie, getCookies } from "cookies-next";
 import { useProfile } from "@/store/ManagerProfile/useProfile";
 import { initialManagerProfile } from "@/store/ManagerProfile/profile";
+import ManagerProfile from "./component/Profile";
 const { Header, Sider, Content } = Layout;
 
 const ManagerLayout = ({ children }: { children: any }) => {
@@ -42,6 +43,8 @@ const ManagerLayout = ({ children }: { children: any }) => {
         return [];
     }
   };
+
+  const [isOpenProfile, setIsOpenProfile] = useState(false);
 
   return (
     <Layout className={styles.managerLayout}>
@@ -166,7 +169,13 @@ const ManagerLayout = ({ children }: { children: any }) => {
                     fontWeight: 600,
                   }}
                 >
-                  {profile?.full_name}
+                  <Button
+                    type="text"
+                    onClick={() => setIsOpenProfile(true)}
+                    className={styles.btnShowProfile}
+                  >
+                    {profile?.full_name}
+                  </Button>
                 </div>
                 <Button
                   icon={<LogoutOutlined />}
@@ -188,6 +197,12 @@ const ManagerLayout = ({ children }: { children: any }) => {
           {children}
         </Content>
       </Layout>
+      {isOpenProfile && (
+        <ManagerProfile
+          isOpen={isOpenProfile}
+          setIsOpen={setIsOpenProfile}
+        />
+      )}
     </Layout>
   );
 };

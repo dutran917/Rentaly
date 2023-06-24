@@ -12,7 +12,7 @@ const HomePage = () => {
         </div>
         <div className={style.banner2}>
           <div className={style.bannerContent2}>
-            PROVIP TOP 1 VIET NAM
+            ĐƠN VỊ SỐ 1 VẬN HÀNH CHUNG CƯ MINI
           </div>
         </div>
       </Carousel>

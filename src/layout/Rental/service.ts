@@ -1,4 +1,8 @@
-import { privateRequest, request } from "@/api/request";
+import {
+  privateRequest,
+  privateRequestUser,
+  request,
+} from "@/api/request";
 import { API_PATH } from "@/utils/constant";
 
 interface GetListRentalInput {
@@ -80,4 +84,17 @@ export const createApointmentService = (
 
 export const getListUniversity = () => {
   return request.get(API_PATH.LIST_UNIVERSITY);
+};
+
+export const getVNPayRedirect = (input: {
+  room_id: number;
+  price: number;
+  start_time: string;
+  end_time: string;
+}) => {
+  return privateRequestUser(
+    "GET",
+    API_PATH.VNPAY_REDIRECT +
+      `?price=${input.price}&room_id=${input.room_id}&start_time=${input.start_time}&end_time=${input.end_time}`
+  );
 };

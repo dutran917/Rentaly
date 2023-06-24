@@ -63,7 +63,6 @@ const LoginModal = ({
     form.resetFields();
   };
   const onSumit = (val: any) => {
-    console.log(val);
     if (mode === "register") {
       delete val.re_password;
       registerUser.run(val);
