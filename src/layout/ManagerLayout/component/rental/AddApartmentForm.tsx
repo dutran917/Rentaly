@@ -101,18 +101,27 @@ const ApartmentForm = () => {
         },
       },
       (result, status) => {
-        console.log(result);
-
         if (
           result &&
           status == google.maps.GeocoderStatus.OK
         ) {
+          let dist;
+          result[0]?.address_components?.forEach((add) => {
+            if (
+              add.types[0] ===
+                "administrative_area_level_2" ||
+              add.types[2] === "locality"
+            ) {
+              dist = add.long_name;
+            }
+          });
+          console.log(dist);
+
           setPickerPosition({
             lat: event.latLng?.lat(),
             lng: event.latLng?.lng(),
             customName: result[0].formatted_address,
-            district:
-              result[0]?.address_components[2]?.long_name,
+            district: dist,
           });
         }
       }
@@ -172,7 +181,6 @@ const ApartmentForm = () => {
     setEditorLoaded(true);
   }, []);
   const onFinish = (value: any) => {
-    console.log(value);
     const payload = {
       ...value,
       image: value?.image?.fileList?.map(

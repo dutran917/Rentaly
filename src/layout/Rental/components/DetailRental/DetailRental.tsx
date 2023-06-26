@@ -35,6 +35,7 @@ import moment from "moment";
 import { useProfile } from "@/store/ManagerProfile/useProfile";
 import LoginModal from "@/layout/MainLayout/Component/LoginModal";
 import PaymentModal from "./PaymentModal";
+import CommentsFacebook from "@/components/FacebookComment";
 const DetailRental = () => {
   const router = useRouter();
   const { id } = router.query;
@@ -487,6 +488,7 @@ const DetailRental = () => {
                     name={detail?.address}
                   />
                 </div>
+                <CommentsFacebook id={Number(id)} />
               </div>
             </div>
           </div>
