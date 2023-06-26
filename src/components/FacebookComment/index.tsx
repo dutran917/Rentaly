@@ -23,7 +23,7 @@ const CommentsFacebook = ({ id }: { id: number }) => {
       <div id="fb-root"></div>
       <div
         className="fb-comments"
-        data-href={`http://134.209.103.144:3000/rental/${id}`}
+        data-href={`http://134.209.103.144:8000/rental/${id}`}
         data-numposts="10"
         data-width="100%"
       ></div>
