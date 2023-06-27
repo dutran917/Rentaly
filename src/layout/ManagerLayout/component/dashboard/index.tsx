@@ -9,7 +9,13 @@ import {
   Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
-import { Breadcrumb, Form, Row, Select } from "antd";
+import {
+  Breadcrumb,
+  Button,
+  Form,
+  Row,
+  Select,
+} from "antd";
 import styles from "./index.module.scss";
 import { useRequest } from "ahooks";
 import { getStatisticService } from "./service";
@@ -119,6 +125,7 @@ const DashboardManager = () => {
   });
   const { data } = useRequest(getAllApartment, {
     onSuccess(res) {
+      setSelectedId(res.data?.[0]?.id);
       form.setFieldsValue({
         apartmentId: res.data?.[0]?.id,
         year: "2023",
@@ -126,8 +133,7 @@ const DashboardManager = () => {
     },
   });
 
-  console.log(data);
-
+  const [selectedId, setSelectedId] = useState(0);
   const [form] = Form.useForm();
 
   const searchForm = (
@@ -145,6 +151,7 @@ const DashboardManager = () => {
               key: item?.id,
             }))}
             onChange={(val) => {
+              setSelectedId(val);
               statistic.run({
                 apartmentId: val,
                 year: form.getFieldValue("year"),
@@ -190,6 +197,16 @@ const DashboardManager = () => {
         <b>Tổng doanh thu: </b>
         <span>{`${formatNumber(general.total)}đ`}</span>
       </div>
+      <Button
+        type="primary"
+        style={{
+          margin: "0 30px",
+        }}
+        ghost
+        href={`/manager/rental-management/${selectedId}?room=true`}
+      >
+        Xem chi tiết
+      </Button>
     </Row>
   );
 

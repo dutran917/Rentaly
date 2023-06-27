@@ -26,7 +26,12 @@ const EditApartment = () => {
     },
   });
 
+  const history = useRouter();
+
   useEffect(() => {
+    if (history.query?.room) {
+      setTab("2");
+    }
     if (id) {
       detailApartment.run(Number(id));
     }
@@ -54,14 +59,23 @@ const EditApartment = () => {
           <Link href="/manager/rental-management">
             <Row align="middle">
               <LeftOutlined />
-              <div>Quản lý chung cư</div>
+              <div>
+                Quản lý chung cư{" "}
+                <span
+                  style={{
+                    textTransform: "lowercase",
+                  }}
+                >
+                  {dataApartment?.data?.title}
+                </span>
+              </div>
             </Row>
           </Link>
         </Breadcrumb.Item>
       </Breadcrumb>
       <Tabs
         onChange={(key) => setTab(key)}
-        defaultActiveKey={tab}
+        activeKey={tab}
         items={[
           {
             key: "1",

@@ -1,4 +1,5 @@
 import { getCookie } from "cookies-next";
+import moment from "moment";
 export function formatNumber(x: number): string {
   if (!x) return "0";
   const str = Number(x).toFixed(2).toString();
@@ -20,4 +21,10 @@ export const checkLogin = async () => {
   const tokenUser = await getCookie("accessTokenUser");
   if (tokenUser) return true;
   return false;
+};
+export const checkStatusRent = (end_time: string) => {
+  return (
+    moment(end_time).toDate().getTime() >
+    new Date().getTime()
+  );
 };

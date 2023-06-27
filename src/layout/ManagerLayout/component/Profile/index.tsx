@@ -1,4 +1,5 @@
 import { useProfile } from "@/store/ManagerProfile/useProfile";
+import { useRequest } from "ahooks";
 import {
   Button,
   Form,
@@ -6,8 +7,10 @@ import {
   Modal,
   Row,
   Tabs,
+  notification,
 } from "antd";
 import React, { useState } from "react";
+import { updateProfileService } from "./service";
 
 const ManagerProfile = ({
   isOpen,
@@ -16,7 +19,7 @@ const ManagerProfile = ({
   isOpen: boolean;
   setIsOpen: any;
 }) => {
-  const { profile } = useProfile();
+  const { profile, setProfile } = useProfile();
   const onClose = () => {
     setIsOpen(false);
     formPassword.resetFields();
@@ -24,11 +27,38 @@ const ManagerProfile = ({
   const [formProfile] = Form.useForm();
   const [formPassword] = Form.useForm();
   const [tab, setTab] = useState<string>("info");
+
+  const updateProfile = useRequest(updateProfileService, {
+    manual: true,
+    onSuccess(res) {
+      console.log(res);
+      notification.success({
+        message: "Thành công",
+      });
+      setIsOpen(false);
+      setProfile({
+        ...profile,
+        full_name: res.data?.full_name,
+      });
+    },
+    onError(e) {
+      console.log(e);
+      notification.error({
+        message: "Bạn nhập sai mật khẩu",
+      });
+    },
+  });
+
   const onSubmitChangeProfile = (val: any) => {
-    console.log(val);
+    updateProfile.run({
+      full_name: val.full_name,
+    });
   };
   const onSubmitChangePassword = (val: any) => {
-    console.log(val);
+    updateProfile.run({
+      password: val.password,
+      old_password: val.old_password,
+    });
   };
 
   const submitGroup = (
@@ -36,7 +66,11 @@ const ManagerProfile = ({
       <Button danger onClick={onClose}>
         Hủy
       </Button>
-      <Button type="primary" htmlType="submit">
+      <Button
+        type="primary"
+        htmlType="submit"
+        loading={updateProfile.loading}
+      >
         Lưu
       </Button>
     </Row>
@@ -78,7 +112,10 @@ const ManagerProfile = ({
               ]}
               name="phone"
             >
-              <Input placeholder="Số điện thoại chủ nhà" />
+              <Input
+                placeholder="Số điện thoại chủ nhà"
+                disabled
+              />
             </Form.Item>
             <Form.Item
               label="Email"

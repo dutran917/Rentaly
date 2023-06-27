@@ -30,7 +30,11 @@ import {
 } from "@ant-design/icons";
 import styles from "./index.module.scss";
 import moment from "moment";
-import { formatNumber } from "@/utils/helper";
+import {
+  checkStatusRent,
+  formatNumber,
+} from "@/utils/helper";
+
 const DetailRoom = ({
   isOpen,
   setIsOpen,
@@ -236,47 +240,58 @@ const DetailRoom = ({
       case "2":
         return (
           <div className={styles.roomModalInfo}>
-            {data?.currentRent ? (
-              <div className={styles.roomModalRenter}>
-                <div>
-                  <b>Tên người thuê</b>
-                  <span>
-                    {data?.currentRent?.user?.full_name}
-                  </span>
+            {data?.historyRent?.length > 0 ? (
+              data?.historyRent?.map((currentRent: any) => (
+                <div className={styles.roomModalRenter}>
+                  <div>
+                    <b>Tên người thuê</b>
+                    <span>
+                      {currentRent?.user?.full_name}
+                    </span>
+                  </div>
+                  <div>
+                    <b>Só điện thoại</b>
+                    <span>{currentRent?.user?.phone}</span>
+                  </div>
+                  <div>
+                    <b>Email</b>
+                    <span>{currentRent?.user?.email}</span>
+                  </div>
+                  <div>
+                    <b>Thời hạn thuê</b>
+                    <span>{`${moment(
+                      currentRent?.start_at
+                    ).format("DD/MM/YYYY")} - ${moment(
+                      currentRent?.end_at
+                    ).format("DD/MM/YYYY")}`}</span>
+                  </div>
+                  <div>
+                    <b>Đã thanh toán</b>
+                    <b
+                      style={{
+                        fontSize: "16px",
+                        color: "green",
+                      }}
+                    >
+                      {formatNumber(currentRent?.price)}đ
+                    </b>
+                  </div>
+                  <div>
+                    <b>Trạng thái</b>
+                    <Tag
+                      color={
+                        checkStatusRent(currentRent?.end_at)
+                          ? "green"
+                          : "red"
+                      }
+                    >
+                      {checkStatusRent(currentRent?.end_at)
+                        ? "Đang thuê"
+                        : "Đã hết hạn"}
+                    </Tag>
+                  </div>
                 </div>
-                <div>
-                  <b>Só điện thoại</b>
-                  <span>
-                    {data?.currentRent?.user?.phone}
-                  </span>
-                </div>
-                <div>
-                  <b>Email</b>
-                  <span>
-                    {data?.currentRent?.user?.email}
-                  </span>
-                </div>
-                <div>
-                  <b>Thời hạn thuê</b>
-                  <span>{`${moment(
-                    data?.currentRent?.start_at
-                  ).format("DD/MM/YYYY")} - ${moment(
-                    data?.currentRent?.end_at
-                  ).format("DD/MM/YYYY")}`}</span>
-                </div>
-                <div>
-                  <b>Đã thanh toán</b>
-                  <b
-                    style={{
-                      fontSize: "16px",
-                      color: "green",
-                    }}
-                  >
-                    {formatNumber(data?.currentRent?.price)}
-                    đ
-                  </b>
-                </div>
-              </div>
+              ))
             ) : (
               <p
                 style={{
@@ -373,6 +388,7 @@ const RoomList = () => {
     {
       title: "Giá phòng",
       dataIndex: "price",
+      render: (value) => <>{formatNumber(value)}đ</>,
     },
     {
       title: "Diện tích",

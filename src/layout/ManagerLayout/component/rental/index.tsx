@@ -58,7 +58,12 @@ const RentalManage = () => {
       render: (_, record) => <>{record?.rooms?.length}</>,
     },
     {
-      title: "Số phòng chưa thuê",
+      title: "Số phòng trống",
+      render: (_, record) => (
+        <>
+          {record?.rooms?.length - record?.rented?.length}
+        </>
+      ),
     },
     {
       title: "Trạng thái",

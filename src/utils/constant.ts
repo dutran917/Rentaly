@@ -7,6 +7,7 @@ export const API_PATH = {
   MANAGER_SIGNUP: "/auth/register-user",
   MANAGER_LOGIN: "/auth/lessor-login",
   MANAGER_INFO: "/lessor/info-manager",
+  UPDATE_PROFILE: "/lessor/update-info",
   CREATE_APARTMENT: "/post/apartment",
   EDIT_APARTMENT: "/post/edit-apartment",
   CREATE_ROOM: "/post/room",
