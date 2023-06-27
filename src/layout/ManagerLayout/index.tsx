@@ -106,21 +106,21 @@ const ManagerLayout = ({ children }: { children: any }) => {
                 </div>
               ),
             },
-            {
-              key: "3",
-              icon: <UserOutlined />,
-              label: (
-                <div
-                  onClick={() => {
-                    router.push(
-                      "/manager/service-management"
-                    );
-                  }}
-                >
-                  Quản lý dịch vụ
-                </div>
-              ),
-            },
+            // {
+            //   key: "3",
+            //   icon: <UserOutlined />,
+            //   label: (
+            //     <div
+            //       onClick={() => {
+            //         router.push(
+            //           "/manager/service-management"
+            //         );
+            //       }}
+            //     >
+            //       Quản lý dịch vụ
+            //     </div>
+            //   ),
+            // },
             {
               key: "4",
               icon: <CalendarOutlined />,
