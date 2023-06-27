@@ -125,7 +125,6 @@ const DashboardManager = () => {
   });
   const { data } = useRequest(getAllApartment, {
     onSuccess(res) {
-      setSelectedId(res.data?.[0]?.id);
       form.setFieldsValue({
         apartmentId: res.data?.[0]?.id,
         year: "2023",
@@ -133,7 +132,6 @@ const DashboardManager = () => {
     },
   });
 
-  const [selectedId, setSelectedId] = useState(0);
   const [form] = Form.useForm();
 
   const searchForm = (
@@ -151,7 +149,6 @@ const DashboardManager = () => {
               key: item?.id,
             }))}
             onChange={(val) => {
-              setSelectedId(val);
               statistic.run({
                 apartmentId: val,
                 year: form.getFieldValue("year"),
@@ -203,7 +200,9 @@ const DashboardManager = () => {
           margin: "0 30px",
         }}
         ghost
-        href={`/manager/rental-management/${selectedId}?room=true`}
+        href={`/manager/rental-management/${form.getFieldValue(
+          "apartmentId"
+        )}?room=true`}
       >
         Xem chi tiết
       </Button>
