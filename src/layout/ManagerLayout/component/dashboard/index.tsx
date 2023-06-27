@@ -97,6 +97,7 @@ const DashboardManager = () => {
     );
   }
   const statistic = useRequest(getStatisticService, {
+    manual: true,
     onSuccess(res) {
       const sum = res?.data?.all?.reduce(
         (total: any, item: any) => total + item
@@ -128,6 +129,7 @@ const DashboardManager = () => {
         apartmentId: res.data?.[0]?.id,
         year: "2023",
       });
+      statistic.run(form.getFieldsValue());
     },
   });
 
