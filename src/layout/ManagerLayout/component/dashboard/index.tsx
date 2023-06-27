@@ -97,7 +97,6 @@ const DashboardManager = () => {
     );
   }
   const statistic = useRequest(getStatisticService, {
-    manual: true,
     onSuccess(res) {
       const sum = res?.data?.all?.reduce(
         (total: any, item: any) => total + item
