@@ -44,7 +44,9 @@ const ListItem = ({
                 <h5 className={styles.itemPrice}>
                   {item?.rooms[0]?.price}đ/tháng
                 </h5>
-                <p>{item.address}</p>
+                <p className={styles.itemAddress}>
+                  {item.address}
+                </p>
               </div>
             </div>
           </a>

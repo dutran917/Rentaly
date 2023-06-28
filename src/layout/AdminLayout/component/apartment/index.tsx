@@ -190,7 +190,7 @@ const ApartmentManage = () => {
           />
         </Form.Item>
       </Form>
-      <Button type="primary">Thêm chung cư</Button>
+      {/* <Button type="primary">Thêm chung cư</Button> */}
     </Row>
   );
 
@@ -208,7 +208,12 @@ const ApartmentManage = () => {
       render: (_, record) => <>{record?.rooms?.length}</>,
     },
     {
-      title: "Số phòng chưa thuê",
+      title: "Số phòng còn trống",
+      render: (_, record) => (
+        <>
+          {record?.rooms?.length - record?.rented?.length}
+        </>
+      ),
     },
     {
       title: "Trạng thái",

@@ -5,6 +5,7 @@ import {
   HomeOutlined,
   UserOutlined,
   LogoutOutlined,
+  UsergroupAddOutlined,
 } from "@ant-design/icons";
 import { Button, Layout, Menu, Space } from "antd";
 import styles from "./index.module.scss";
@@ -35,6 +36,8 @@ const AdminLayout = ({ children }: { children: any }) => {
         return ["1"];
       case "/admin/apartment-management":
         return ["2"];
+      case "/admin/user-management":
+        return ["3"];
       default:
         return [];
     }
@@ -97,6 +100,19 @@ const AdminLayout = ({ children }: { children: any }) => {
                   }}
                 >
                   Quản lý chung cư
+                </div>
+              ),
+            },
+            {
+              key: "3",
+              icon: <UsergroupAddOutlined />,
+              label: (
+                <div
+                  onClick={() => {
+                    router.push("/admin/user-management");
+                  }}
+                >
+                  Quản lý người thuê
                 </div>
               ),
             },

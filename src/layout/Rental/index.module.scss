@@ -56,7 +56,7 @@
       color: #222;
       display: inline-block;
       cursor: pointer;
-      padding: 10px 20px;
+      padding: 10px 20px 0 20px;
       border-radius: 3px;
       box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.06);
       border: none;
@@ -64,17 +64,32 @@
       transition: 0.3s;
       p {
         padding: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .slideItemName {
+        font-weight: 600;
+        font-size: 15px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        transition: 0.3s;
       }
       &:hover {
         color: #feb800;
+        .slideItemName {
+          color: #feb800;
+        }
       }
       @media (max-width: 1200px) {
         width: unset;
-        height: 100px;
+        // height: 100px;
       }
       @media (max-width: 600px) {
-        width: unset;
-        height: 100px;
+        width: 100px;
+        height: 60px;
+        // height: 100px;
       }
     }
   }
@@ -82,67 +97,75 @@
 
 .listItemSection {
   min-height: calc(100vh - 300px);
-  .listItem {
-    margin: 20px 0;
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-    // gap: 2rem;
-    justify-content: flex-start;
-    .itemContainer {
-      // cursor: pointer;
-      color: #222;
-      width: 23%;
-      margin: 20px 10px;
-      .item {
-        margin: auto;
-        min-height: 320px;
-        font-size: 14px;
-        .itemType {
-          word-spacing: 0.085rem;
-        }
-        .itemImage {
-          height: 160px;
-          width: 100%;
-          background-size: cover;
-        }
-        .itemName {
-          font-weight: 700;
-          font-size: 16px;
-        }
-        .itemPrice {
-          font-size: 15px;
-          font-weight: 600;
-        }
+}
+.listItem {
+  margin: 20px 0;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  // gap: 2rem;
+  justify-content: flex-start;
+  .itemContainer {
+    // cursor: pointer;
+    color: #222;
+    width: 23%;
+    margin: 20px 10px;
+    .item {
+      margin: auto;
+      min-height: 320px;
+      font-size: 14px;
+      .itemType {
+        word-spacing: 0.085rem;
       }
-      &:hover {
-        .itemName {
-          animation-name: opacity-hover;
-          animation-duration: 0.4s;
-          color: #feb800;
-        }
+      .itemImage {
+        height: 160px;
+        width: 100%;
+        background-size: cover;
       }
-      @media (max-width: 900px) {
-        width: 45%;
-        min-height: 200px;
-        .itemImage {
-          height: 100px;
-          width: 100%;
-        }
+      .itemName {
+        font-weight: 700;
+        font-size: 15px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
-      @media (max-width: 600px) {
-        width: 40%;
-        min-height: 200px;
-        .itemImage {
-          height: 100px;
-          width: 100%;
-        }
+      .itemPrice {
+        font-size: 15px;
+        font-weight: 600;
+      }
+      .itemAddress {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
-
+    &:hover {
+      .itemName {
+        animation-name: opacity-hover;
+        animation-duration: 0.4s;
+        color: #feb800;
+      }
+    }
     @media (max-width: 900px) {
-      justify-content: center;
+      width: 45%;
+      min-height: 200px;
+      .itemImage {
+        height: 100px;
+        width: 100%;
+      }
     }
+    @media (max-width: 600px) {
+      width: 40%;
+      min-height: 200px;
+      .itemImage {
+        height: 100px;
+        width: 100%;
+      }
+    }
+  }
+
+  @media (max-width: 900px) {
+    justify-content: center;
   }
 }
 .pagination {

@@ -38,3 +38,25 @@ export const verifyLessorService = (input: {
     { ...input }
   );
 };
+
+export const getDetailLessor = (idLessor: number) => {
+  return privateRequestAdmin(
+    "GET",
+    API_PATH.AMDIN_GET_DETAIL_LESSOR(idLessor)
+  );
+};
+
+export const updateProfileLessor = (input: {
+  lessorId: number;
+  full_name?: string;
+  phone?: string;
+  email?: string;
+}) => {
+  return privateRequestAdmin(
+    "POST",
+    API_PATH.ADMIN_UPDATE_LESSOR,
+    {
+      ...input,
+    }
+  );
+};

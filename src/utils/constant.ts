@@ -26,6 +26,7 @@ export const API_PATH = {
   REGISTER_USER: "/auth/register-user",
   LOGIN_USER: "/auth/user-login",
   USER_INFO: "/user/info-user",
+  UPDATE_PROFILE_USER: "user/update-info",
   GET_LIST_RENTAL: "/rental/list-apartment",
   GET_DETAIL_APARTMENT: (id: number) =>
     `/rental/detail-apartment/${id}`,
@@ -40,8 +41,12 @@ export const API_PATH = {
   ADMIN_LOGIN: "/auth/admin-login",
   ADMIN_INFO: "/admin/info-admin",
   ADMIN_GET_LIST_LESSOR: "/admin/register-lessor",
+  AMDIN_GET_DETAIL_LESSOR: (id: number) =>
+    `/admin/detail-lessor/${id}`,
+  ADMIN_UPDATE_LESSOR: "/admin/edit-lessor",
   ADMIN_VERIFY_LESSOR: "/admin/approve-lessor",
   ADMIN_GET_LIST_APARTMNET: "/admin/list-apartment",
+  ADMIN_GET_LIST_USER: "/admin/list-user",
   ADMIN_APPROVE_APARTMENT: "/admin/approve-apartment",
   ADMIN_GET_DETAIL_APARTMENT: (id: number) =>
     `/admin/detail-apartment/${id}`,

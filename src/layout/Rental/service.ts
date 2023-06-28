@@ -8,10 +8,10 @@ import { API_PATH } from "@/utils/constant";
 interface GetListRentalInput {
   page_size: number;
   page_index: number;
-  search: string;
-  district: string;
-  price: string[];
-  type: string[];
+  search?: string;
+  district?: string;
+  price?: string[];
+  type?: string[];
   lat?: number;
   long?: number;
 }

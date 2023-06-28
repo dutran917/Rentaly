@@ -19,6 +19,14 @@ $breakpoints: (
     .subContent {
       width: 30%;
     }
+    @media (max-width: 1200px) {
+      .mainContent {
+        width: 60%;
+      }
+      .subContent {
+        width: 40%;
+      }
+    }
   }
 
   .carousel {

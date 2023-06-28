@@ -158,14 +158,12 @@ const LessorManagement = () => {
           />
         </Form.Item>
       </Form>
-      <Button
+      {/* <Button
         type="primary"
-        // onClick={() =>
-        //   router.push("/manager/add-apartment")
-        // }
+      
       >
         Thêm chủ nhà
-      </Button>
+      </Button> */}
     </Row>
   );
 

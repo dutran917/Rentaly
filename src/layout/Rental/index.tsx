@@ -257,7 +257,11 @@ const RentMainPage = () => {
                         className={styles.slideItem}
                       >
                         <div>
-                          <b>{item.name}</b>
+                          <h4
+                            className={styles.slideItemName}
+                          >
+                            {item.name}
+                          </h4>
                           <p>{`Có ${item.count} căn hộ cho thuê`}</p>
                         </div>
                       </div>

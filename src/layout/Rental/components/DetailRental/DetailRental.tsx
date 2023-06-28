@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { useRequest } from "ahooks";
 import {
   getDetailApartment,
+  getListRental,
   getListRoom,
   getRoom,
   getVNPayRedirect,
@@ -36,6 +37,7 @@ import { useProfile } from "@/store/ManagerProfile/useProfile";
 import LoginModal from "@/layout/MainLayout/Component/LoginModal";
 import PaymentModal from "./PaymentModal";
 import CommentsFacebook from "@/components/FacebookComment";
+import ListItem from "../ListItem";
 const DetailRental = () => {
   const router = useRouter();
   const { id } = router.query;
@@ -54,6 +56,10 @@ const DetailRental = () => {
     onSuccess: (res) => {
       setListRoom(res?.data?.rooms);
     },
+  });
+
+  const listRental = useRequest(getListRental, {
+    manual: true,
   });
 
   const filterListRoom = useRequest(getListRoom, {
@@ -80,6 +86,12 @@ const DetailRental = () => {
   useEffect(() => {
     if (detail) {
       roomDetail.run(detail?.rooms?.[0]?.id);
+      listRental.run({
+        page_size: 4,
+        page_index: 1,
+        lat: detail?.lat,
+        long: detail?.long,
+      });
     }
   }, [detail]);
   const carouselRef = useRef();
@@ -489,6 +501,16 @@ const DetailRental = () => {
                   />
                 </div>
                 <CommentsFacebook id={Number(id)} />
+
+                <div className={styles.similarApartment}>
+                  <div className={styles.subtitle}>
+                    <p> Toà nhà gần đây</p>
+                  </div>
+                  <ListItem
+                    listItem={listRental.data?.data}
+                    loading={listRental?.loading}
+                  />
+                </div>
               </div>
             </div>
           </div>
