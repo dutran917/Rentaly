@@ -9,6 +9,7 @@ import {
   Table,
   Tag,
   Tooltip,
+  Typography,
   notification,
 } from "antd";
 import { ColumnsType } from "antd/lib/table";
@@ -18,8 +19,11 @@ import {
   EyeOutlined,
   CheckOutlined,
   CloseOutlined,
+  LockOutlined,
+  UnlockOutlined,
 } from "@ant-design/icons";
 import {
+  blockUserService,
   getListLessor,
   verifyLessorService,
 } from "./service";
@@ -49,6 +53,15 @@ const LessorManagement = () => {
       });
     },
   });
+  const blockLessor = useRequest(blockUserService, {
+    manual: true,
+    onSuccess(res) {
+      notification.success({
+        message: "Thành công",
+      });
+      refresh();
+    },
+  });
   const handleVerifyLessor = (id: number) => {
     return Modal.confirm({
       title: "Xác nhận phê duyệt",
@@ -62,6 +75,31 @@ const LessorManagement = () => {
         verifyLessor.run({
           lessor_id: id,
           accept: true,
+        });
+      },
+    });
+  };
+
+  const handleBlockLessor = (
+    id: number,
+    status: boolean
+  ) => {
+    return Modal.confirm({
+      title: `Xác nhận ${
+        status ? "Mở khóa" : "Khóa"
+      } tài khoản chủ nhà`,
+      content: `Bạn muốn ${
+        status ? "Mở khóa" : "Khóa"
+      } tài khoản chủ nhà này?`,
+      okText: "Xác nhận",
+      cancelText: "Hủy",
+      okButtonProps: {
+        loading: blockLessor.loading,
+      },
+      onOk() {
+        blockLessor.run({
+          userId: id,
+          status: status,
         });
       },
     });
@@ -131,9 +169,9 @@ const LessorManagement = () => {
       <Form
         layout="vertical"
         form={form}
-        initialValues={{
-          verified: "PENDING",
-        }}
+        // initialValues={{
+        //   verified: "PENDING",
+        // }}
       >
         <Form.Item name="verified">
           <Select
@@ -193,12 +231,16 @@ const LessorManagement = () => {
       title: "Trạng thái",
       dataIndex: "verified",
       render(value, record, index) {
-        if (value === "PENDING")
-          return <Tag color="warning">Chờ xác thực</Tag>;
-        if (value === "ACCEPT")
-          return <Tag color="green">Đã xác thực</Tag>;
-        if (value === "REFUSE")
-          return <Tag color="red">Từ chối xác thực</Tag>;
+        if (record?.status) {
+          if (value === "PENDING")
+            return <Tag color="warning">Chờ xác thực</Tag>;
+          if (value === "ACCEPT")
+            return <Tag color="green">Đã xác thực</Tag>;
+          if (value === "REFUSE")
+            return <Tag color="red">Từ chối xác thực</Tag>;
+        } else {
+          return <Tag color="red">Đã khóa</Tag>;
+        }
       },
     },
     {
@@ -218,6 +260,41 @@ const LessorManagement = () => {
               }}
             />
           </Tooltip>
+          {record?.verified !== "PENDING" &&
+            record?.verified !== "REFUSE" &&
+            (record?.status ? (
+              <>
+                <Tooltip title="Khóa tài khoản">
+                  <LockOutlined
+                    style={{
+                      color: "red",
+                    }}
+                    onClick={() =>
+                      handleBlockLessor(
+                        record?.id,
+                        !record?.status
+                      )
+                    }
+                  />
+                </Tooltip>
+              </>
+            ) : (
+              <>
+                <Tooltip title="Mở khóa tài khoản">
+                  <UnlockOutlined
+                    style={{
+                      color: "blue",
+                    }}
+                    onClick={() =>
+                      handleBlockLessor(
+                        record?.id,
+                        !record?.status
+                      )
+                    }
+                  />
+                </Tooltip>
+              </>
+            ))}
           <>
             {record?.verified === "PENDING" && (
               <>
@@ -250,11 +327,16 @@ const LessorManagement = () => {
   ];
   return (
     <div>
+      <Typography>
+        <Typography.Title level={5}>
+          Quản lý chủ nhà
+        </Typography.Title>
+      </Typography>
       {searchForm}
       <Table
         columns={columns}
         {...tableProps}
-        loading={loading}
+        loading={verifyLessor.loading}
         rowKey={(item) => item.id}
         scroll={{ x: 1000 }}
       />

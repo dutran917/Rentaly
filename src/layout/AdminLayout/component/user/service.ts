@@ -27,3 +27,25 @@ export const getListUser = (
     };
   });
 };
+
+export const getDetailUser = (idUser: number) => {
+  return privateRequestAdmin(
+    "GET",
+    API_PATH.ADMIN_GET_DETAIL_USER(idUser)
+  );
+};
+
+export const updateProfileUser = (input: {
+  lessorId: number;
+  full_name?: string;
+  phone?: string;
+  email?: string;
+}) => {
+  return privateRequestAdmin(
+    "POST",
+    API_PATH.ADMIN_UPDATE_LESSOR,
+    {
+      ...input,
+    }
+  );
+};

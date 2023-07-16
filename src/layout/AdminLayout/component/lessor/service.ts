@@ -60,3 +60,12 @@ export const updateProfileLessor = (input: {
     }
   );
 };
+
+export const blockUserService = (input: {
+  userId: number;
+  status: boolean;
+}) => {
+  return privateRequestAdmin("POST", API_PATH.BLOCK_USER, {
+    ...input,
+  });
+};

@@ -29,14 +29,20 @@ const ManagerLogin = () => {
         message: "Đăng nhập thành công",
       });
     },
-    onError: (e) => {
-      //@ts-ignore
-      if (e?.response?.status === 401) {
+    onError: (e: any) => {
+      if (
+        e?.response?.data?.message === "WRONG_CREDENTIALS"
+      ) {
         notification.error({
           message: "Sai tên đăng nhập hoặc mật khẩu",
         });
       }
-      //@ts-ignore
+      if (e?.response?.data?.message === "BLOCKED") {
+        notification.error({
+          message: "Tài khoản của bạn đã bị khóa",
+        });
+      }
+
       if (e?.response?.status === 400) {
         notification.error({
           message: "Tài khoản của bạn chưa được kích hoạt",

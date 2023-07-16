@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useRequest } from "ahooks";
 import { useRecoilState } from "recoil";
-
+import { deleteCookie } from "cookies-next";
 import {
   managerProfileAtom,
   initialManagerProfile,
@@ -17,7 +17,9 @@ import {
   request,
 } from "@/api/request";
 import { API_PATH } from "@/utils/constant";
+import { useRouter } from "next/router";
 export const useProfile = () => {
+  const router = useRouter();
   const [profile, setProfile] = useRecoilState(
     managerProfileAtom
   );
@@ -42,7 +44,10 @@ export const useProfile = () => {
         });
       },
       onError: () => {
+        router.push("/manager/login");
         setProfile(initialManagerProfile);
+        deleteCookie("managerId");
+        deleteCookie("accessTokenManager");
       },
     }
   );
@@ -85,6 +90,8 @@ export const useProfile = () => {
       },
       onError: () => {
         setProfileUser(initialUserProfile);
+        deleteCookie("userId");
+        deleteCookie("accessTokenUser");
       },
     }
   );

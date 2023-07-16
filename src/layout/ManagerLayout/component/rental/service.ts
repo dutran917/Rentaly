@@ -35,6 +35,16 @@ export interface CreateRoomInput {
   area: number;
 }
 
+export interface UpdateRoomInput {
+  roomId: number;
+  title: string;
+  price: number;
+  maximum: number;
+  bed_room: number;
+  tags: number[];
+  area: number;
+}
+
 export const createApartment = (
   input: CreateApartmentInput
 ) => {
@@ -60,6 +70,12 @@ export const createRoom = (
   return privateRequest("POST", API_PATH.CREATE_ROOM, {
     ...input,
     apartmentId,
+  });
+};
+
+export const editRoomService = (input: UpdateRoomInput) => {
+  return privateRequest("POST", API_PATH.EDIT_ROOM, {
+    ...input,
   });
 };
 
@@ -130,4 +146,13 @@ export const getInfoRoom = (roomId: number) => {
     "GET",
     API_PATH.ROOM_DETAIL(roomId)
   );
+};
+
+export const hideRoomService = (input: {
+  roomId: number;
+  display: boolean;
+}) => {
+  return privateRequest("POST", API_PATH.HIDE_ROOM, {
+    ...input,
+  });
 };

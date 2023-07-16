@@ -9,6 +9,7 @@ import {
   Table,
   Tag,
   Tooltip,
+  Typography,
   notification,
 } from "antd";
 import { ColumnsType } from "antd/lib/table";
@@ -17,11 +18,14 @@ import React, { useEffect } from "react";
 import {
   approveApartmentService,
   getListApartment,
+  hideApartmentService,
 } from "./service";
 import {
   EyeOutlined,
   CheckOutlined,
   CloseOutlined,
+  LockOutlined,
+  UnlockOutlined,
 } from "@ant-design/icons";
 import styles from "./index.module.scss";
 const ApartmentManage = () => {
@@ -49,6 +53,16 @@ const ApartmentManage = () => {
     useAntdTable(getListApartment, {
       form,
     });
+
+  const hideApartment = useRequest(hideApartmentService, {
+    manual: true,
+    onSuccess() {
+      notification.success({
+        message: "Thành công",
+      });
+      refresh();
+    },
+  });
   const { submit } = search;
 
   const approveApartment = useRequest(
@@ -83,6 +97,29 @@ const ApartmentManage = () => {
         approveApartment.run({
           apartmentId: id,
           approve: true,
+        });
+      },
+    });
+  };
+
+  const handleDisplayApartment = (
+    id: number,
+    display: boolean
+  ) => {
+    return Modal.confirm({
+      title: `Xác nhận`,
+      content: `Bạn muốn ${
+        display ? "hiển thị" : "ẩn"
+      } chung cư này?`,
+      okText: "Xác nhận",
+      cancelText: "Hủy",
+      okButtonProps: {
+        loading: hideApartment.loading,
+      },
+      onOk() {
+        hideApartment.run({
+          apartmentId: id,
+          display: display,
         });
       },
     });
@@ -228,6 +265,16 @@ const ApartmentManage = () => {
       },
     },
     {
+      title: "Hiển thị",
+      render: (_, record) => (
+        <Tag color={record?.published ? "green" : "gray"}>
+          {record?.published
+            ? "Đang hiển thị"
+            : "Không hiển thị"}
+        </Tag>
+      ),
+    },
+    {
       title: "Hành động",
       align: "center",
       render: (_, record) => (
@@ -269,6 +316,40 @@ const ApartmentManage = () => {
                 </Tooltip>
               </>
             )}
+            {record?.verified === "ACCEPT" &&
+              (record?.published ? (
+                <>
+                  <Tooltip title="Ẩn chung cư này">
+                    <LockOutlined
+                      style={{
+                        color: "red",
+                      }}
+                      onClick={() =>
+                        handleDisplayApartment(
+                          record?.id,
+                          false
+                        )
+                      }
+                    />
+                  </Tooltip>
+                </>
+              ) : (
+                <>
+                  <Tooltip title="Hiển thị chung cư này">
+                    <UnlockOutlined
+                      style={{
+                        color: "green",
+                      }}
+                      onClick={() =>
+                        handleDisplayApartment(
+                          record?.id,
+                          true
+                        )
+                      }
+                    />
+                  </Tooltip>
+                </>
+              ))}
           </>
         </Row>
       ),
@@ -276,6 +357,11 @@ const ApartmentManage = () => {
   ];
   return (
     <div>
+      <Typography>
+        <Typography.Title level={5}>
+          Quản lý chung cư
+        </Typography.Title>
+      </Typography>
       {searchForm}
       <Table
         columns={columns}

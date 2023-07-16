@@ -11,6 +11,8 @@ export const API_PATH = {
   CREATE_APARTMENT: "/post/apartment",
   EDIT_APARTMENT: "/post/edit-apartment",
   CREATE_ROOM: "/post/room",
+  EDIT_ROOM: "post/edit-room",
+  HIDE_ROOM: "/post/hide-room",
   APARTMENT_LIST: "/post/apartment-list",
   ALL_APARTMENT: "/post/all-apartment",
   APARTMENT_TAGS: "/post/apartment-tag",
@@ -47,12 +49,16 @@ export const API_PATH = {
   ADMIN_VERIFY_LESSOR: "/admin/approve-lessor",
   ADMIN_GET_LIST_APARTMNET: "/admin/list-apartment",
   ADMIN_GET_LIST_USER: "/admin/list-user",
+  ADMIN_GET_DETAIL_USER: (id: number) =>
+    `/admin/detail-user/${id}`,
   ADMIN_APPROVE_APARTMENT: "/admin/approve-apartment",
   ADMIN_GET_DETAIL_APARTMENT: (id: number) =>
     `/admin/detail-apartment/${id}`,
   ADMIN_EDIT_APARTMENT: "/admin/edit-apartment",
   ADMIN_GET_ROOM_LIST: (id: number) =>
     `/admin/room-list/${id}`,
+  HIDE_APARTMENT: "/admin/hide-apartment",
+  BLOCK_USER: "/admin/block-user",
 };
 
 export const district: IDistrict[] = [

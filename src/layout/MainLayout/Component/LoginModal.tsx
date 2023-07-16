@@ -51,10 +51,15 @@ const LoginModal = ({
       setProfileUser(res?.data);
       onClose();
     },
-    onError: () => {
-      message.error(
-        "Tên đăng nhập hoặc mật khẩu không đúng"
-      );
+    onError: (err) => {
+      //@ts-ignore
+      if (err?.response?.data?.message === "BLOCKED") {
+        message.error("Tài khoản của bạn đã bị khóa");
+      } else {
+        message.error(
+          "Tên đăng nhập hoặc mật khẩu không đúng"
+        );
+      }
     },
   });
   const onClose = () => {

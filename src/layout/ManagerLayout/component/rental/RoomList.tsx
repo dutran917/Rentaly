@@ -2,9 +2,11 @@ import { useAntdTable, useRequest } from "ahooks";
 import React, { useState } from "react";
 import {
   createRoom,
+  editRoomService,
   getInfoRoom,
   getListRoom,
   getListRoomTags,
+  hideRoomService,
 } from "./service";
 import { useRouter } from "next/router";
 import { EyeOutlined } from "@ant-design/icons";
@@ -27,6 +29,8 @@ import { ColumnsType } from "antd/lib/table";
 import {
   PlusOutlined,
   EditOutlined,
+  LockOutlined,
+  UnlockOutlined,
 } from "@ant-design/icons";
 import styles from "./index.module.scss";
 import moment from "moment";
@@ -40,17 +44,37 @@ const DetailRoom = ({
   setIsOpen,
   data,
   listTag,
+  refresh,
 }: {
   isOpen: boolean;
   setIsOpen: any;
   data: any;
   listTag: any[];
+  refresh: () => void;
 }) => {
+  const onUpdateRoom = useRequest(editRoomService, {
+    manual: true,
+    onSuccess: (res) => {
+      notification.success({
+        message: "Sửa thông tin phòng thành công",
+      });
+      setDisabled(true);
+      refresh();
+    },
+    onError: (error) => {
+      notification.error({
+        message: "Có lỗi xảy ra",
+      });
+    },
+  });
   const onClose = () => {
     setIsOpen(false);
   };
   const onSubmit = (val: any) => {
-    console.log(val);
+    onUpdateRoom.run({
+      ...val,
+      roomId: +data?.id,
+    });
   };
   const [formEditRoom] = Form.useForm();
   const tags = data?.TagsInRoom?.map((item: any) => {
@@ -278,17 +302,23 @@ const DetailRoom = ({
                   </div>
                   <div>
                     <b>Trạng thái</b>
+
                     <Tag
                       color={
-                        checkStatusRent(currentRent?.end_at)
+                        currentRent?.status === "RENTING"
                           ? "green"
-                          : "red"
+                          : currentRent?.status ===
+                            "OUT_DATE"
+                          ? "red"
+                          : "warning"
                       }
-                    >
-                      {checkStatusRent(currentRent?.end_at)
+                    >{`${
+                      currentRent?.status === "RENTING"
                         ? "Đang thuê"
-                        : "Đã hết hạn"}
-                    </Tag>
+                        : currentRent?.status === "OUT_DATE"
+                        ? "Hết hạn"
+                        : "Sắp hết hạn"
+                    }`}</Tag>
                   </div>
                 </div>
               ))
@@ -352,6 +382,7 @@ const RoomList = () => {
       });
     },
   });
+
   const { tableProps, search, refresh } = useAntdTable(
     getListRoom,
     {
@@ -368,6 +399,21 @@ const RoomList = () => {
       form,
     }
   );
+
+  const hideRoom = useRequest(hideRoomService, {
+    manual: true,
+    onSuccess() {
+      notification.success({
+        message: "Thành công",
+      });
+      refresh();
+    },
+    onError(e) {
+      notification.error({
+        message: "Phòng đang được thuê",
+      });
+    },
+  });
 
   const [isOpenRoomDetail, setIsOpenRoomDetail] =
     useState(false);
@@ -424,11 +470,19 @@ const RoomList = () => {
       ),
     },
     {
+      title: "Hiển thị",
+      render: (_, record) => (
+        <Tag color={record?.display ? "green" : "gray"}>
+          {record?.display ? "Đang hiển thị" : "Đã ẩn"}
+        </Tag>
+      ),
+    },
+    {
       title: "Hành động",
       width: "10%",
       align: "center",
       render: (_, record) => (
-        <>
+        <Row justify="space-around">
           <Tooltip title="Xem">
             <EyeOutlined
               onClick={() => roomDetail.run(record?.id)}
@@ -438,7 +492,38 @@ const RoomList = () => {
               }}
             />
           </Tooltip>
-        </>
+          {record?.display ? (
+            <Tooltip title="Ẩn phòng">
+              <LockOutlined
+                onClick={() =>
+                  hideRoom.run({
+                    roomId: record?.id,
+                    display: false,
+                  })
+                }
+                style={{
+                  color: "red",
+                  cursor: "pointer",
+                }}
+              />
+            </Tooltip>
+          ) : (
+            <Tooltip title="Hiển thị phòng">
+              <UnlockOutlined
+                onClick={() =>
+                  hideRoom.run({
+                    roomId: record?.id,
+                    display: true,
+                  })
+                }
+                style={{
+                  color: "green",
+                  cursor: "pointer",
+                }}
+              />
+            </Tooltip>
+          )}
+        </Row>
       ),
     },
   ];
@@ -624,6 +709,7 @@ const RoomList = () => {
       />
       {isOpenRoomDetail && (
         <DetailRoom
+          refresh={refresh}
           isOpen={isOpenRoomDetail}
           setIsOpen={setIsOpenRoomDetail}
           data={roomDetail.data?.data}

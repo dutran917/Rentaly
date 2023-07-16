@@ -112,3 +112,16 @@ export const getListRoom = (
     };
   });
 };
+
+export const hideApartmentService = (input: {
+  apartmentId: number;
+  display: boolean;
+}) => {
+  return privateRequestAdmin(
+    "POST",
+    API_PATH.HIDE_APARTMENT,
+    {
+      ...input,
+    }
+  );
+};
