@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "../index.module.scss";
 import { Spin } from "antd";
+import { formatNumber } from "@/utils/helper";
 const ListItem = ({
   listItem,
   loading,
@@ -20,7 +21,7 @@ const ListItem = ({
         </div>
       )}
       {!loading &&
-        listItem?.data?.map((item: any, index: number) => (
+        listItem?.map((item: any, index: number) => (
           <a
             className={styles.itemContainer}
             key={index}
@@ -42,7 +43,8 @@ const ListItem = ({
                 </h3>
                 <p>{`Phòng 1 khách - ${item?.rooms[0]?.bed_room} ngủ`}</p>
                 <h5 className={styles.itemPrice}>
-                  {item?.rooms[0]?.price}đ/tháng
+                  {formatNumber(item?.rooms[0]?.price)}
+                  đ/tháng
                 </h5>
                 <p className={styles.itemAddress}>
                   {item.address}

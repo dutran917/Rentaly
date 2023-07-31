@@ -200,6 +200,9 @@ const ApartmentForm = () => {
           layout="vertical"
           onFinish={onFinish}
           form={form}
+          onKeyDown={(e: any) =>
+            e.keyCode == 13 ? e.preventDefault() : ""
+          }
         >
           <Form.Item
             name="title"

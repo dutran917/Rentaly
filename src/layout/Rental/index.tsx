@@ -298,7 +298,7 @@ const RentMainPage = () => {
       <div className={styles.listItemSection}>
         <div className={styles.container}>
           <ListItem
-            listItem={listRental.data?.data}
+            listItem={listRental.data?.data?.data}
             loading={listRental?.loading}
           />
           {listRental?.data?.data?.data?.length > 0 && (

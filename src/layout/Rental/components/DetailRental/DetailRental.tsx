@@ -87,7 +87,7 @@ const DetailRental = () => {
     if (detail) {
       roomDetail.run(detail?.rooms?.[0]?.id);
       listRental.run({
-        page_size: 4,
+        page_size: 20,
         page_index: 1,
         lat: detail?.lat,
         long: detail?.long,
@@ -507,7 +507,9 @@ const DetailRental = () => {
                     <p> Toà nhà gần đây</p>
                   </div>
                   <ListItem
-                    listItem={listRental.data?.data}
+                    listItem={listRental.data?.data?.data?.filter(
+                      (item: any) => item.id !== Number(id)
+                    )}
                     loading={listRental?.loading}
                   />
                 </div>
