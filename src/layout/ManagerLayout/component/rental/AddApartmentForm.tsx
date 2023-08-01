@@ -79,7 +79,15 @@ const ApartmentForm = () => {
   const onPlacesChanged = () => {
     //@ts-ignore
     const place = searchBoxRef?.getPlaces()[0];
-
+    let dist;
+    place?.address_components?.forEach((add: any) => {
+      if (
+        add.types[0] === "administrative_area_level_2" ||
+        add.types[2] === "locality"
+      ) {
+        dist = add.long_name;
+      }
+    });
     const newLocation = {
       lat: place?.geometry?.location.lat(),
       lng: place?.geometry?.location.lng(),
@@ -89,8 +97,10 @@ const ApartmentForm = () => {
     setPickerPosition({
       ...newLocation,
       customName: place?.formatted_address,
+      district: dist,
     });
   };
+
   const handleClick = (event: any) => {
     const geocode = new window.google.maps.Geocoder();
     geocode.geocode(
