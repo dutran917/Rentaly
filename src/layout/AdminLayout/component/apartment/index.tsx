@@ -28,25 +28,8 @@ import {
   UnlockOutlined,
 } from "@ant-design/icons";
 import styles from "./index.module.scss";
+import { district } from "@/utils/constant";
 const ApartmentManage = () => {
-  const options = [
-    {
-      label: "Đống đa",
-      value: "Đống Đa",
-    },
-    {
-      label: "Hai bà trưng",
-      value: "Hai bà trưng",
-    },
-    {
-      label: "Cầu giấy",
-      value: "Cầu giấy",
-    },
-    {
-      label: "Mỹ đình",
-      value: "Mỹ đình",
-    },
-  ];
   const router = useRouter();
   const [form] = Form.useForm();
   const { tableProps, refresh, search, loading } =
@@ -198,8 +181,11 @@ const ApartmentManage = () => {
         </Form.Item>
         <Form.Item name="district">
           <Select
+            style={{
+              width: "200px",
+            }}
             allowClear
-            options={options}
+            options={district}
             placeholder="Khu vực"
             onChange={submit}
           />

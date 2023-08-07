@@ -45,6 +45,7 @@ export const API_PATH = {
   ADMIN_GET_LIST_LESSOR: "/admin/register-lessor",
   AMDIN_GET_DETAIL_LESSOR: (id: number) =>
     `/admin/detail-lessor/${id}`,
+  ADMIN_CREATE_LESSOR: "/admin/create-lessor",
   ADMIN_UPDATE_LESSOR: "/admin/edit-lessor",
   ADMIN_VERIFY_LESSOR: "/admin/approve-lessor",
   ADMIN_GET_LIST_APARTMNET: "/admin/list-apartment",
