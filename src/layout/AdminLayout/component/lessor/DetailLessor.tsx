@@ -165,6 +165,15 @@ const DetailLessor = () => {
             Doanh thu của chủ nhà
           </Typography.Title>
         </Typography>
+        <Typography>
+          <Typography.Title level={5}>
+            Tổng doanh thu:{" "}
+            {formatNumber(
+              detailLessor.data?.data?.lessorIncome
+            )}
+            VND
+          </Typography.Title>
+        </Typography>
         <Table
           columns={columns}
           dataSource={
