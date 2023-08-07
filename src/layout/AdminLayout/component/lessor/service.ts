@@ -54,6 +54,7 @@ export const updateProfileLessor = (input: {
   full_name?: string;
   phone?: string;
   email?: string;
+  password?: string;
 }) => {
   return privateRequestAdmin(
     "POST",

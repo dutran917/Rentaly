@@ -126,6 +126,10 @@ const DetailLessor = () => {
             <Form.Item name="email" label="Email">
               <Input />
             </Form.Item>
+            <Form.Item label="Mật khẩu" name="password">
+              <Input.Password placeholder="Đổi mật khẩu tài khoản" />
+            </Form.Item>
+
             {!disabled && (
               <Row>
                 <Button
