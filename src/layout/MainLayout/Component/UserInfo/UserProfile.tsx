@@ -2,15 +2,22 @@ import {
   Button,
   Form,
   Input,
+  Modal,
   Row,
   message,
   notification,
 } from "antd";
 import React, { useEffect, useState } from "react";
-import { EditOutlined } from "@ant-design/icons";
+import {
+  EditOutlined,
+  LockOutlined,
+} from "@ant-design/icons";
 import { useProfile } from "@/store/ManagerProfile/useProfile";
 import { useRequest } from "ahooks";
-import { userUpdateProfile } from "./service";
+import {
+  userUpdatePassword,
+  userUpdateProfile,
+} from "./service";
 const UserProfile = () => {
   const { profileUser, requestGetProfileUser } =
     useProfile();
@@ -46,13 +53,140 @@ const UserProfile = () => {
       phone: val.phone,
     });
   };
+  const updatePassword = useRequest(userUpdatePassword, {
+    manual: true,
+    onSuccess(res) {
+      formChangePassword.resetFields();
+
+      notification.success({
+        message: "Đổi mật khẩu thành công",
+      });
+    },
+    onError(e) {
+      notification.error({
+        message: "Bạn đã nhập sai mật khẩu",
+      });
+    },
+  });
+  const [formChangePassword] = Form.useForm();
+  const handleChangePassword = () => {
+    const onFinish = (val: any) => {
+      updatePassword.run({
+        old_password: val.old_password,
+        new_password: val.new_password,
+      });
+    };
+
+    Modal.confirm({
+      icon: null,
+      title: "Đổi mật khẩu",
+      width: 600,
+      content: (
+        <Form
+          form={formChangePassword}
+          id="formChangePassword"
+          onFinish={onFinish}
+          layout="vertical"
+        >
+          <Form.Item
+            label="Mật khẩu hiện tại"
+            rules={[
+              {
+                required: true,
+                message: "Vui lòng nhập",
+              },
+            ]}
+            name="old_password"
+          >
+            <Input.Password placeholder="Nhập mật khẩu hiện tại" />
+          </Form.Item>
+          <Form.Item
+            label="Mật khẩu mới"
+            name="new_password"
+            rules={[
+              {
+                required: true,
+                message: "Vui lòng nhập",
+              },
+            ]}
+          >
+            <Input.Password placeholder="Nhập mật khẩu mới" />
+          </Form.Item>
+          <Form.Item
+            label="Xác nhận mật khẩu"
+            dependencies={["new_password"]}
+            hasFeedback
+            rules={[
+              {
+                required: true,
+                message: "Vui lòng nhập",
+              },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (
+                    !value ||
+                    getFieldValue("new_password") === value
+                  ) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(
+                    new Error("Mật khẩu không khớp")
+                  );
+                },
+              }),
+            ]}
+            name="re_password"
+          >
+            <Input.Password placeholder="Xác nhận mật khẩu" />
+          </Form.Item>
+        </Form>
+      ),
+      okText: "Xác nhận",
+      cancelText: "Hủy",
+      okButtonProps: {
+        htmlType: "submit",
+        form: "formChangePassword",
+        loading: updatePassword.loading,
+      },
+
+      onCancel() {
+        formChangePassword.resetFields();
+      },
+      onOk() {
+        if (
+          formChangePassword.getFieldValue("new_password")
+        ) {
+          return Promise.resolve();
+        } else {
+          return Promise.reject();
+        }
+      },
+    });
+  };
   return (
     <div>
-      <Row justify="end">
+      <Row
+        justify="start"
+        style={{
+          margin: "20px 0",
+        }}
+      >
         <Button
           icon={<EditOutlined />}
           onClick={() => setDisabled(!disabled)}
-        ></Button>
+        >
+          Chỉnh sửa thông tin
+        </Button>
+        <Button
+          type="primary"
+          style={{
+            margin: "0 20px",
+          }}
+          icon={<LockOutlined />}
+          onClick={() => handleChangePassword()}
+        >
+          Đổi mật khẩu
+        </Button>
       </Row>
 
       <Form
@@ -60,6 +194,9 @@ const UserProfile = () => {
         layout="vertical"
         disabled={disabled}
         onFinish={onSubmit}
+        style={{
+          width: "50%",
+        }}
       >
         <Form.Item
           name="full_name"
@@ -94,12 +231,15 @@ const UserProfile = () => {
               danger
               onClick={() => setDisabled(true)}
             >
-              HỦy
+              Hủy
             </Button>
             <Button
               htmlType="submit"
               type="primary"
               loading={updateProfile.loading}
+              style={{
+                margin: "0 20px",
+              }}
             >
               Thay đổi thông tin
             </Button>

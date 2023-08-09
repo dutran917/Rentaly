@@ -96,6 +96,30 @@ const DashboardManager = () => {
       ")"
     );
   }
+  function getDarkColor() {
+    var color = "#";
+    for (var i = 0; i < 6; i++) {
+      color += Math.floor(Math.random() * 10);
+    }
+    return color;
+  }
+  const randomColor = (() => {
+    "use strict";
+
+    const randomInt = (min: number, max: number) => {
+      return (
+        Math.floor(Math.random() * (max - min + 1)) + min
+      );
+    };
+
+    return () => {
+      var h = randomInt(0, 360);
+      var s = randomInt(42, 98);
+      var l = randomInt(40, 90);
+      return `hsl(${h},${s}%,${l}%)`;
+    };
+  })();
+
   const statistic = useRequest(getStatisticService, {
     manual: true,
     onSuccess(res) {
@@ -117,7 +141,7 @@ const DashboardManager = () => {
           ...res.data?.rooms?.map((item: any) => ({
             label: "P" + item?.title,
             data: item?.stats,
-            backgroundColor: random_rgba(),
+            backgroundColor: randomColor(),
           })),
         ],
       }));

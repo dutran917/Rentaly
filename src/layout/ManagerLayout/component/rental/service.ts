@@ -86,11 +86,13 @@ export const getListApartment = (
   }: { current: number; pageSize: number },
   formData: {
     searchValue: string;
+    status: string;
   }
 ) => {
-  const query = `?page_size=${pageSize}&page_index=${
+  let query = `?page_size=${pageSize}&page_index=${
     current - 1
   }&search=${formData.searchValue || ""}`;
+
   return privateRequest(
     "GET",
     API_PATH.APARTMENT_LIST + query
@@ -109,12 +111,16 @@ export const getListRoom = (
     id,
   }: { current: number; pageSize: number; id: number },
   formData: {
-    searchValue: string;
+    searchValue?: string;
+    status?: string;
   }
 ) => {
-  const query = `?page_size=${pageSize}&page_index=${
+  let query = `?page_size=${pageSize}&page_index=${
     current - 1
   }&search=${formData.searchValue || ""}`;
+  if (!!formData.status) {
+    query += `&status=${formData.status}`;
+  }
   return privateRequest(
     "GET",
     API_PATH.ROOM_LIST(id) + query

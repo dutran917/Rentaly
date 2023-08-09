@@ -28,7 +28,8 @@ export const API_PATH = {
   REGISTER_USER: "/auth/register-user",
   LOGIN_USER: "/auth/user-login",
   USER_INFO: "/user/info-user",
-  UPDATE_PROFILE_USER: "user/update-info",
+  UPDATE_PROFILE_USER: "/user/update-info",
+  UPDATE_PASSWORD: "/user/update-password",
   GET_LIST_RENTAL: "/rental/list-apartment",
   GET_DETAIL_APARTMENT: (id: number) =>
     `/rental/detail-apartment/${id}`,

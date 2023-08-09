@@ -679,12 +679,35 @@ const RoomList = () => {
   };
 
   const searchForm = (
-    <Row justify="space-between">
-      <Form layout="vertical" form={form}>
+    <Row
+      justify="space-between"
+      style={{
+        marginBottom: "20px",
+      }}
+    >
+      <Form layout="inline" form={form}>
         <Form.Item name="searchValue">
           <Input.Search
+            allowClear
             placeholder="Tìm kiếm theo số phòng"
             onSearch={submit}
+          />
+        </Form.Item>
+        <Form.Item name="status">
+          <Select
+            allowClear
+            onChange={submit}
+            placeholder="Trạng thái"
+            options={[
+              {
+                label: "Phòng trống",
+                value: "FREE",
+              },
+              {
+                label: "Phòng đã thuê",
+                value: "RENTED",
+              },
+            ]}
           />
         </Form.Item>
       </Form>
@@ -706,6 +729,7 @@ const RoomList = () => {
         scroll={{
           x: 1000,
         }}
+        rowKey={(item) => item.id}
       />
       {isOpenRoomDetail && (
         <DetailRoom

@@ -17,3 +17,16 @@ export const userUpdateProfile = (input: {
     }
   );
 };
+
+export const userUpdatePassword = (input: {
+  old_password: string;
+  new_password: string;
+}) => {
+  return privateRequestUser(
+    "POST",
+    API_PATH.UPDATE_PASSWORD,
+    {
+      ...input,
+    }
+  );
+};

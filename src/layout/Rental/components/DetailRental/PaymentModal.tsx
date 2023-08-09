@@ -7,6 +7,7 @@ import {
   Modal,
   Row,
   Select,
+  notification,
 } from "antd";
 import moment from "moment";
 import React, { useState } from "react";
@@ -39,6 +40,11 @@ const PaymentModal = ({
       if (typeof window !== "undefined") {
         window.location.href = res?.data;
       }
+    },
+    onError(err: any) {
+      notification.error({
+        message: err?.response?.data?.message,
+      });
     },
   });
 

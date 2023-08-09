@@ -108,6 +108,10 @@ const ApointmentManage = () => {
       dataIndex: "apartment",
     },
     {
+      title: "Ghi chú của người hẹn",
+      dataIndex: "note",
+    },
+    {
       title: "Trạng thái",
       dataIndex: "status",
       render: (value) => (
