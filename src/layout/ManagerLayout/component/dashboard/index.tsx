@@ -195,18 +195,20 @@ const DashboardManager = () => {
         <b>Tổng doanh thu: </b>
         <span>{`${formatNumber(general.total)}đ`}</span>
       </div>
-      <Button
-        type="primary"
-        style={{
-          margin: "0 30px",
-        }}
-        ghost
-        href={`/manager/rental-management/${form.getFieldValue(
-          "apartmentId"
-        )}?room=true`}
-      >
-        Xem chi tiết
-      </Button>
+      {statistic.data?.data && (
+        <Button
+          type="primary"
+          style={{
+            margin: "0 30px",
+          }}
+          ghost
+          href={`/manager/rental-management/${form.getFieldValue(
+            "apartmentId"
+          )}?room=true`}
+        >
+          Xem chi tiết
+        </Button>
+      )}
     </Row>
   );
 
