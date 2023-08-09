@@ -24,6 +24,7 @@ import {
 } from "@ant-design/icons";
 import {
   blockUserService,
+  createLessorService,
   getListLessor,
   verifyLessorService,
 } from "./service";
@@ -50,6 +51,24 @@ const LessorManagement = () => {
     onError(err) {
       notification.error({
         message: "Có lỗi xảy ra!",
+      });
+    },
+  });
+  const createLessor = useRequest(createLessorService, {
+    manual: true,
+    onSuccess(res) {
+      console.log(res);
+
+      notification.success({
+        message: "Thêm thành công",
+      });
+      refresh();
+    },
+    onError(err) {
+      console.log(err);
+
+      notification.error({
+        message: "Số điện thoại hoặc email đã tồn tại",
       });
     },
   });
@@ -164,15 +183,117 @@ const LessorManagement = () => {
     });
   };
 
+  const [formCreateLessor] = Form.useForm();
+  const handleCreateLessor = () => {
+    const onCreateLessor = (val: any) => {
+      createLessor.run({
+        ...val,
+      });
+    };
+
+    Modal.confirm({
+      icon: null,
+      title: "Thêm chủ nhà",
+      width: 400,
+      content: (
+        <Form
+          form={formCreateLessor}
+          id="formCreateLessor"
+          onFinish={onCreateLessor}
+          layout="vertical"
+        >
+          <Form.Item
+            name="email"
+            label="Email"
+            rules={[
+              {
+                required: true,
+                message: "Vui lòng nhập",
+              },
+            ]}
+          >
+            <Input placeholder="Nhập email tài khoản" />
+          </Form.Item>
+          <Form.Item
+            name="phone"
+            label="Số điện thoại"
+            rules={[
+              {
+                required: true,
+                message: "Vui lòng nhập",
+              },
+            ]}
+          >
+            <Input placeholder="Nhập số điện thoại tài khoản" />
+          </Form.Item>
+          <Form.Item
+            name="full_name"
+            label="Họ và tên"
+            rules={[
+              {
+                required: true,
+                message: "Vui lòng nhập",
+              },
+            ]}
+          >
+            <Input placeholder="Nhập họ và tên" />
+          </Form.Item>
+          <Form.Item
+            name="password"
+            label="Mật khẩu"
+            rules={[
+              {
+                required: true,
+                message: "Vui lòng nhập",
+              },
+            ]}
+          >
+            <Input.Password placeholder="Nhập mật khẩu" />
+          </Form.Item>
+        </Form>
+      ),
+      okText: "Xác nhận",
+      cancelText: "Hủy",
+      okButtonProps: {
+        htmlType: "submit",
+        form: "formCreateLessor",
+        loading: createLessor.loading,
+      },
+
+      onCancel() {
+        formCreateLessor.resetFields();
+      },
+      onOk() {
+        if (formCreateLessor.getFieldValue("email")) {
+          return Promise.resolve();
+        } else {
+          return Promise.reject();
+        }
+      },
+    });
+  };
+
   const searchForm = (
-    <Row justify="space-between">
+    <Row
+      justify="space-between"
+      style={{
+        marginBottom: "20px",
+      }}
+    >
       <Form
-        layout="vertical"
+        layout="inline"
         form={form}
         // initialValues={{
         //   verified: "PENDING",
         // }}
       >
+        <Form.Item name="search">
+          <Input.Search
+            allowClear
+            onSearch={submit}
+            placeholder="Tìm kiếm theo tên, email, sđt chủ nhà"
+          />
+        </Form.Item>
         <Form.Item name="verified">
           <Select
             allowClear
@@ -196,12 +317,12 @@ const LessorManagement = () => {
           />
         </Form.Item>
       </Form>
-      {/* <Button
+      <Button
         type="primary"
-      
+        onClick={() => handleCreateLessor()}
       >
         Thêm chủ nhà
-      </Button> */}
+      </Button>
     </Row>
   );
 

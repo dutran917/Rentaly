@@ -8,11 +8,14 @@ export const getListLessor = (
   }: { current: number; pageSize: number },
   formData: {
     verified: string;
+    search: string;
   }
 ) => {
   const query = `?page_size=${pageSize}&page_index=${
     current - 1
-  }&verified=${formData.verified || ""}`;
+  }&verified=${formData.verified || ""}&search=${
+    formData.search || ""
+  }`;
   return privateRequestAdmin(
     "GET",
     API_PATH.ADMIN_GET_LIST_LESSOR + query
@@ -51,6 +54,7 @@ export const updateProfileLessor = (input: {
   full_name?: string;
   phone?: string;
   email?: string;
+  password?: string;
 }) => {
   return privateRequestAdmin(
     "POST",
@@ -68,4 +72,19 @@ export const blockUserService = (input: {
   return privateRequestAdmin("POST", API_PATH.BLOCK_USER, {
     ...input,
   });
+};
+
+export const createLessorService = (input: {
+  email: string;
+  phone: string;
+  full_name: string;
+  password: string;
+}) => {
+  return privateRequestAdmin(
+    "POST",
+    API_PATH.ADMIN_CREATE_LESSOR,
+    {
+      ...input,
+    }
+  );
 };

@@ -126,6 +126,10 @@ const DetailLessor = () => {
             <Form.Item name="email" label="Email">
               <Input />
             </Form.Item>
+            <Form.Item label="Mật khẩu" name="password">
+              <Input.Password placeholder="Đổi mật khẩu tài khoản" />
+            </Form.Item>
+
             {!disabled && (
               <Row>
                 <Button
@@ -159,6 +163,15 @@ const DetailLessor = () => {
         <Typography>
           <Typography.Title level={5}>
             Doanh thu của chủ nhà
+          </Typography.Title>
+        </Typography>
+        <Typography>
+          <Typography.Title level={5}>
+            Tổng doanh thu:{" "}
+            {formatNumber(
+              detailLessor.data?.data?.lessorIncome
+            )}
+            VND
           </Typography.Title>
         </Typography>
         <Table
