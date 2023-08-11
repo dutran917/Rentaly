@@ -661,6 +661,7 @@ const RoomList = () => {
       okButtonProps: {
         htmlType: "submit",
         form: "createRoomForm",
+        loading: onCreateRoom.loading,
       },
       onCancel: () => {
         createRoomForm.resetFields();
