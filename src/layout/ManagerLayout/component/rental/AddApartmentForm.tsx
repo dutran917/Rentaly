@@ -374,6 +374,7 @@ const ApartmentForm = () => {
             <Button
               type="primary"
               htmlType="submit"
+              loading={createRequest.loading}
               className={styles.submitBtn}
             >
               Xác nhận
